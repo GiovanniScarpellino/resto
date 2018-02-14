@@ -1,8 +1,10 @@
 package canadiens.resto.baseDeDonnees;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import canadiens.resto.R;
 
@@ -38,9 +46,12 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private SupportMapFragment mapCourante;
 
     private final String TAG = "ERREUR : ";
+
+    private FusedLocationProviderClient locationClient;
+
+    private com.google.android.gms.maps.GoogleMap googleMapCourante;
 
     public GoogleMap() {
 
@@ -70,6 +81,7 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        locationClient = LocationServices.getFusedLocationProviderClient(getContext());
     }
 
     /**
@@ -83,6 +95,7 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SupportMapFragment mapCourante;
         View vue = inflater.inflate(R.layout.fragment_google_map, container, false);
         mapCourante = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapCourante.getMapAsync(this);
@@ -110,11 +123,27 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
      * Méthode appelé lorsque là carte est prête
      * @param googleMap
      */
+    @SuppressLint("MissingPermission")
     @Override
-    public void onMapReady(com.google.android.gms.maps.GoogleMap googleMap) {
+    public void onMapReady(final com.google.android.gms.maps.GoogleMap googleMap) {
+        googleMapCourante = googleMap;
         verifierLocalisation(googleMap);
+        googleMap.setMyLocationEnabled(true);
+        locationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            changerLocalisationCamera(location);
+                        }
+                    }
+                });
     }
 
+    /**
+     * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de location
+     * @param googleMap
+     */
     public void verifierLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
         LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsActive = false;
@@ -128,7 +157,6 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
         }
 
         if(!gpsActive && !reseauActive) {
-            // notify user
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
             dialog.setMessage(R.string.indication_fenetre_location);
             dialog.setPositiveButton(R.string.bouton_oui, new DialogInterface.OnClickListener() {
@@ -143,23 +171,19 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     getActivity().finish();
-
                 }
             });
             dialog.show();
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    private void changerLocalisationCamera(Location nouvelleLocalisation) {
+        CameraUpdate pointACentrer = CameraUpdateFactory.newLatLng(new LatLng(nouvelleLocalisation.getLatitude(), nouvelleLocalisation.getLongitude()));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        googleMapCourante.moveCamera(pointACentrer);
+        googleMapCourante.animateCamera(zoom);
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
