@@ -44,6 +44,8 @@ public class VuePrincipale extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        changerDeFragment(1);
     }
 
     @Override
@@ -95,7 +97,6 @@ public class VuePrincipale extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-            changerDeFragment(1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -104,9 +105,14 @@ public class VuePrincipale extends AppCompatActivity
     }
 
     private void changerDeFragment(int indiceChangement) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conteneur_principal,new GoogleMap())
-                .commit();
+        switch (indiceChangement) {
+            case 1:
+                getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.conteneur_principal,new GoogleMap())
+                    .commit();
+            break;
+
+        }
     }
 
     @Override
