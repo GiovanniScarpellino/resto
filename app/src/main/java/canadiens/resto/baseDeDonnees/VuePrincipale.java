@@ -1,4 +1,4 @@
-package canadiens.resto.baseDeDonnées;
+package canadiens.resto.baseDeDonnees;
 
 import android.app.FragmentManager;
 import android.net.Uri;

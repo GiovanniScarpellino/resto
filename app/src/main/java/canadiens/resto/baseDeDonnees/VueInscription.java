@@ -1,4 +1,4 @@
-package canadiens.resto.baseDeDonnées;
+package canadiens.resto.baseDeDonnees;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

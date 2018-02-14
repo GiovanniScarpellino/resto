@@ -1,4 +1,4 @@
-package canadiens.resto.baseDeDonnées;
+package canadiens.resto.baseDeDonnees;
 
 import android.Manifest;
 import android.content.Context;
@@ -114,8 +114,8 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }else{
-            googleMap.setMyLocationEnabled(true);
         }
+        googleMap.setMyLocationEnabled(true);
     }
 
     /**
