@@ -1,12 +1,18 @@
 package canadiens.resto;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 
 /**
@@ -17,7 +23,8 @@ import android.view.ViewGroup;
  * Use the {@link GoogleMap#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GoogleMap extends Fragment {
+public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
+        OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -25,8 +32,10 @@ public class GoogleMap extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private SupportMapFragment mapCourante;
 
     public GoogleMap() {
+
     }
 
     /**
@@ -55,17 +64,21 @@ public class GoogleMap extends Fragment {
         }
     }
 
+    /**
+     * Méthode appelé lors de la création de la vue
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_google_map, container, false);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View vue = inflater.inflate(R.layout.fragment_google_map, container, false);
+        mapCourante = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapCourante.getMapAsync(this);
+        return vue;
     }
 
     @Override
@@ -86,6 +99,24 @@ public class GoogleMap extends Fragment {
     }
 
     /**
+     * Méthode appelé lorsque là carte est prête
+     * @param googleMap
+     */
+    @Override
+    public void onMapReady(com.google.android.gms.maps.GoogleMap googleMap) {
+        demanderPermissionLocalisation(googleMap);
+    }
+
+    public void demanderPermissionLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }else{
+            googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
@@ -98,4 +129,6 @@ public class GoogleMap extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
