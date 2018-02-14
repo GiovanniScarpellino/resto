@@ -1,17 +1,19 @@
 package canadiens.resto.baseDeDonnees;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -37,6 +39,8 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
 
     private OnFragmentInteractionListener mListener;
     private SupportMapFragment mapCourante;
+
+    private final String TAG = "ERREUR : ";
 
     public GoogleMap() {
 
@@ -108,15 +112,41 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
      */
     @Override
     public void onMapReady(com.google.android.gms.maps.GoogleMap googleMap) {
-        demanderPermissionLocalisation(googleMap);
+        verifierLocalisation(googleMap);
     }
 
-    public void demanderPermissionLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            //googleMap.setMyLocationEnabled(true);
-        } else {
-            Toast.makeText(getContext(), "Veuillez Activez la localisation", Toast.LENGTH_LONG);
+    public void verifierLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
+        LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsActive = false;
+        boolean reseauActive = false;
+
+        try {
+            gpsActive = gestionLocation.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            reseauActive = gestionLocation.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception exception1) {
+            Log.e(TAG, exception1.getMessage());
+        }
+
+        if(!gpsActive && !reseauActive) {
+            // notify user
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+            dialog.setMessage(R.string.indication_fenetre_location);
+            dialog.setPositiveButton(R.string.bouton_oui, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    getActivity().startActivity(myIntent);
+                }
+            });
+            dialog.setNegativeButton(R.string.bouton_non, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    getActivity().finish();
+
+                }
+            });
+            dialog.show();
         }
     }
 

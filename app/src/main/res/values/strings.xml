@@ -6,6 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Google Map String-->
+    <string name="indication_fenetre_location">"L'application doit avoir accès à la localisation pour son bon fonctionemment, voulez-vous l'activé ?</string>
+    <string name="bouton_oui">oui</string>
+    <string name="bouton_non">non, merci</string>
 </resources>
