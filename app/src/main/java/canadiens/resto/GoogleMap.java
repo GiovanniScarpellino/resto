@@ -27,7 +27,6 @@ public class GoogleMap extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public GoogleMap() {
-        // Required empty public constructor
     }
 
     /**
