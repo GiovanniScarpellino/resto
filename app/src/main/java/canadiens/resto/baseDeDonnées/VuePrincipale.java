@@ -1,4 +1,4 @@
-package canadiens.resto;
+package canadiens.resto.baseDeDonnées;
 
 import android.app.FragmentManager;
 import android.net.Uri;
@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import canadiens.resto.R;
 
 public class VuePrincipale extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleMap.OnFragmentInteractionListener {

@@ -1,4 +1,4 @@
-package canadiens.resto;
+package canadiens.resto.baseDeDonnées;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import canadiens.resto.R;
 
 
 /**
