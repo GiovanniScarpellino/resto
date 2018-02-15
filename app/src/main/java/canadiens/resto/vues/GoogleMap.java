@@ -1,4 +1,4 @@
-package canadiens.resto.baseDeDonnees;
+package canadiens.resto.vues;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
