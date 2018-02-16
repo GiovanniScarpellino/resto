@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".vues.VuePrincipale" />
-        <activity android:name=".vues.VueInscription" />
+        <activity android:name=".vues.VueInscriptionRestaurant" />
+        <activity android:name=".vues.VueInscriptionClient" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

@@ -24,6 +24,21 @@
         tools:layout_editor_absoluteX="120dp"
         tools:layout_editor_absoluteY="29dp" />
 
+    <TextView
+        android:id="@+id/txt_mdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mot De Passe :" />
+
+    <EditText
+        android:id="@+id/champ_mdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Votre mot de passe"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
     <Button
         android:id="@+id/action_connexion"
         android:layout_width="match_parent"
