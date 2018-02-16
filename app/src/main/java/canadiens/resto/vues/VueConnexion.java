@@ -28,10 +28,19 @@ public class VueConnexion extends AppCompatActivity {
         btnClient = (Button) findViewById(R.id.action_inscription_client);
         btnRestaurant = (Button) findViewById(R.id.action_inscription_restaurant);
 
+        ajouterEcouteur();
 
-        /**
-         * Listeners des boutons
-         */
+
+
+        Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipale.class);
+        //startActivity(intentionVersHamburgerMenu);
+    }
+
+    /**
+     * Listeners des boutons
+     */
+    private void ajouterEcouteur(){
+
         btnClient.setOnClickListener(new View.OnClickListener() { // fait la fonction modifier dans le boutton valider
             @Override
             public void onClick(View v) {
@@ -47,11 +56,5 @@ public class VueConnexion extends AppCompatActivity {
                 startActivity(intentionVersInscriptionRestaurant);
             }
         });
-
-        Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipale.class);
-        //startActivity(intentionVersHamburgerMenu);
-
-
-
     }
 }
