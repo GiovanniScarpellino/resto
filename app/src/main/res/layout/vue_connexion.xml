@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="canadiens.resto.vues.VueConnexion">
+    tools:context="canadiens.resto.vues.VueConnexion"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/txt_identifiant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Identifiant :"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="36dp" />
+
+    <EditText
+        android:id="@+id/champ_identifiant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Votre identifiant"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Button
+        android:id="@+id/action_connexion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Connexion" />
+
+    <TextView
+        android:id="@+id/txt_inscription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="S'inscrire" />
+
+    <Button
+        android:id="@+id/action_inscription_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Client" />
+
+    <Button
+        android:id="@+id/action_inscription_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restaurateur" />
+
+</LinearLayout>
