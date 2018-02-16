@@ -1,9 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="canadiens.resto.vues.VueInscriptionRestaurant">
+    tools:context="canadiens.resto.vues.VueInscriptionRestaurant"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/champ_nom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nom du restaurant"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_adresse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Adresse du restaurant"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Latitude"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Longitude"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_telephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Telephone du restaurant"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Votre email"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Description rapide de votre restaurant"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <EditText
+        android:id="@+id/champ_mdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Mot de passe"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <LinearLayout android:layout-width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content">
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valider"
+            android:id="@+id/action_valider"
+            android:layout_gravity="center"/>
+
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retour"
+            android:id="@+id/action_retour"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>
