@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -52,6 +53,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private final int CODE_REQUETE = 666;
 
     private String mParam1;
     private String mParam2;
@@ -151,13 +153,36 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
     public void onMapReady(final GoogleMap googleMap) {
         googleMapCourante = googleMap;
         creerRequeteLocalisation();
-        verifierLocalisation(googleMap);
+        verifierLocalisationActivee(googleMap);
+
 
         //Demande la permission à l'utilisateur pour utiliser la localisation
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        String permissions[] = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ActivityCompat.checkSelfPermission(getContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED) {
+            activerToutLesServicesDeLocalisation();
+        } else {
+            requestPermissions(permissions, CODE_REQUETE);
         }
-        googleMap.setMyLocationEnabled(true);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == CODE_REQUETE) {
+            if (permissions.length == 2 &&
+                    permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    permissions[1].equals(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                activerToutLesServicesDeLocalisation();
+            } else {
+                Toast.makeText(getContext(), "L'application ne fonctionnera pas si vous n'acceptez pas les demandes de permissions", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void activerToutLesServicesDeLocalisation() {
+        googleMapCourante.setMyLocationEnabled(true);
 
         //Ecouteur pour surcharger la méthode de clique du calque de localisation
         googleMapCourante.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
@@ -168,7 +193,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                     @Override
                     public void onSuccess(Location localisation) {
                         if(localisation != null) {
-                            changerLocalisationCamera(localisation, 20);
+                            changerLocalisationCamera(localisation, 17);
                         }
                     }
                 });
@@ -182,7 +207,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                     @Override
                     public void onSuccess(Location localisation) {
                         if (localisation != null) {
-                            changerLocalisationCamera(localisation, 20);
+                            changerLocalisationCamera(localisation, 17);
                         }
                     }
                 });
@@ -205,7 +230,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
      * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de localisation
      * @param googleMap
      */
-    public void verifierLocalisation(GoogleMap googleMap) {
+    public void verifierLocalisationActivee(GoogleMap googleMap) {
         LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsActive = false;
         boolean reseauActive = false;
