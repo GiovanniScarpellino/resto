@@ -1,6 +1,7 @@
 package canadiens.resto.vues;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -158,13 +160,30 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         }
         googleMap.setMyLocationEnabled(true);
 
+        //Ecouteur pour surcharger la méthode de clique du calque de localisation
+        googleMapCourante.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public boolean onMyLocationButtonClick() {
+                serviceLocalisationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location localisation) {
+                        if(localisation != null) {
+                            changerLocalisationCamera(localisation, 20);
+                        }
+                    }
+                });
+                return true;
+            }
+        });
+
         // Récupère la dernière localisation connu au démarrage de l'application
         serviceLocalisationClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location localisation) {
                         if (localisation != null) {
-                            changerLocalisationCamera(localisation, 15);
+                            changerLocalisationCamera(localisation, 20);
                         }
                     }
                 });
