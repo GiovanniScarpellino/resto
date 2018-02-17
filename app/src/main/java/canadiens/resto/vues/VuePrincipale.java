@@ -27,9 +27,6 @@ public class VuePrincipale extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        Intent intentionTest = new Intent(VuePrincipale.this, VueConnexion.class);
-        startActivity(intentionTest);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -39,7 +36,7 @@ public class VuePrincipale extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //changerDeFragment(1);
+        changerDeFragment(1);
     }
 
     @Override
