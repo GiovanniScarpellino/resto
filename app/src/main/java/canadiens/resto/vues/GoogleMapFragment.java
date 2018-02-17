@@ -40,15 +40,6 @@ import java.util.List;
 import canadiens.resto.R;
 import canadiens.resto.modeles.Restaurant;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link GoogleMapFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link GoogleMapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
         OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
@@ -165,6 +156,12 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         }
     }
 
+    /**
+     * Méthode appelé après le résultat de la demande de permission
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == CODE_REQUETE) {
@@ -180,6 +177,9 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         }
     }
 
+    /**
+     * Active tout les services de localisation nécéssaire pour la GoogleMap
+     */
     @SuppressLint("MissingPermission")
     private void activerToutLesServicesDeLocalisation() {
         googleMapCourante.setMyLocationEnabled(true);
