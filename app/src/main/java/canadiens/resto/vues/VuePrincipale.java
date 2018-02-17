@@ -1,7 +1,6 @@
 package canadiens.resto.vues;
 
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,7 +15,7 @@ import android.view.MenuItem;
 import canadiens.resto.R;
 
 public class VuePrincipale extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleMap.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleMapFragment.OnFragmentInteractionListener {
 
     private FragmentManager gestionFragment;
 
@@ -99,7 +98,7 @@ public class VuePrincipale extends AppCompatActivity
         switch (indiceChangement) {
             case 1:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal,new GoogleMap())
+                    .replace(R.id.conteneur_principal,new GoogleMapFragment())
                     .commit();
             break;
         }

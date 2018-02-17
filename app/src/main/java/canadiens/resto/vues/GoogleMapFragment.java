@@ -30,6 +30,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap;
 
 import java.util.List;
 
@@ -40,12 +42,12 @@ import canadiens.resto.modeles.Restaurant;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GoogleMap.OnFragmentInteractionListener} interface
+ * {@link GoogleMapFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GoogleMap#newInstance} factory method to
+ * Use the {@link GoogleMapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
+public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
         OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -57,14 +59,16 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
 
     private final String TAG = "GoogleMap : ";
 
-    private com.google.android.gms.maps.GoogleMap googleMapCourante;
+    private GoogleMap googleMapCourante;
 
     private FusedLocationProviderClient serviceLocalisationClient;
     private LocationRequest requeteLocalisation;
     private LocationCallback miseAJourLocalisation;
 
+    private InfoWindowAdapter fenetreInformation;
 
-    public GoogleMap() {
+
+    public GoogleMapFragment() {
 
     }
 
@@ -74,8 +78,8 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
      * @param param2
      * @return
      */
-    public static GoogleMap newInstance(String param1, String param2) {
-        GoogleMap fragment = new GoogleMap();
+    public static GoogleMapFragment newInstance(String param1, String param2) {
+        GoogleMapFragment fragment = new GoogleMapFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -129,14 +133,26 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
     }
 
     /**
+     * Méthode qui défini les paramètres de la localisation
+     */
+    protected void creerRequeteLocalisation() {
+        requeteLocalisation = new LocationRequest();
+        requeteLocalisation.setInterval(10000);
+        requeteLocalisation.setFastestInterval(5000);
+        requeteLocalisation.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    /**
      * Méthode appelée lorsque la carte est prête à être utilisée
      * @param googleMap
      */
     @Override
-    public void onMapReady(final com.google.android.gms.maps.GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         googleMapCourante = googleMap;
         creerRequeteLocalisation();
         verifierLocalisation(googleMap);
+
+        //Demande la permission à l'utilisateur pour utiliser la localisation
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -168,20 +184,10 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
     }
 
     /**
-     * Méthode qui défini les paramètres de la localisation
-     */
-    protected void creerRequeteLocalisation() {
-        requeteLocalisation = new LocationRequest();
-        requeteLocalisation.setInterval(10000);
-        requeteLocalisation.setFastestInterval(5000);
-        requeteLocalisation.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    /**
      * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de localisation
      * @param googleMap
      */
-    public void verifierLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
+    public void verifierLocalisation(GoogleMap googleMap) {
         LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsActive = false;
         boolean reseauActive = false;
