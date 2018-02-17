@@ -26,9 +26,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import canadiens.resto.R;
+import canadiens.resto.modeles.Restaurant;
 
 
 /**
@@ -59,14 +64,6 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
 
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GoogleMap.
-     */
     public static GoogleMap newInstance(String param1, String param2) {
         GoogleMap fragment = new GoogleMap();
         Bundle args = new Bundle();
@@ -111,7 +108,7 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " doit implémenter OnFragmentInteractionListener");
         }
     }
 
@@ -130,13 +127,6 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
         googleMapCourante = googleMap;
         verifierLocalisation(googleMap);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         googleMap.setMyLocationEnabled(true);
@@ -149,6 +139,8 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
                         }
                     }
                 });
+
+
     }
 
     /**
@@ -190,9 +182,17 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
 
     private void changerLocalisationCamera(Location nouvelleLocalisation) {
         CameraUpdate pointACentrer = CameraUpdateFactory.newLatLng(new LatLng(nouvelleLocalisation.getLatitude(), nouvelleLocalisation.getLongitude()));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(1);
         googleMapCourante.moveCamera(pointACentrer);
         googleMapCourante.animateCamera(zoom);
+    }
+
+    private void afficherPinRestaurant(List<Restaurant> listeRestaurant) {
+        for(Restaurant restaurant : listeRestaurant) {
+            googleMapCourante.addMarker(new MarkerOptions()
+                    .position(new LatLng(restaurant.getLongitude(), restaurant.getLatitude())))
+                    .setTitle(restaurant.getNom());
+        }
     }
 
     public interface OnFragmentInteractionListener {
