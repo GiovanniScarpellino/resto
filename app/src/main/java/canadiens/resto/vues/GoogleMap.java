@@ -1,7 +1,6 @@
 package canadiens.resto.vues;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,7 +31,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import canadiens.resto.R;
@@ -54,16 +55,25 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
 
     private OnFragmentInteractionListener mListener;
 
-    private final String TAG = "ERREUR : ";
-
-    private FusedLocationProviderClient locationClient;
+    private final String TAG = "GoogleMap : ";
 
     private com.google.android.gms.maps.GoogleMap googleMapCourante;
+
+    private FusedLocationProviderClient serviceLocalisationClient;
+    private LocationRequest requeteLocalisation;
+    private LocationCallback miseAJourLocalisation;
+
 
     public GoogleMap() {
 
     }
 
+    /**
+     * Méthode pour créer une nouvelle instance de GoogleMap avec des paramètres
+     * @param param1
+     * @param param2
+     * @return
+     */
     public static GoogleMap newInstance(String param1, String param2) {
         GoogleMap fragment = new GoogleMap();
         Bundle args = new Bundle();
@@ -80,7 +90,7 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        locationClient = LocationServices.getFusedLocationProviderClient(getContext());
+        serviceLocalisationClient = LocationServices.getFusedLocationProviderClient(getContext());
     }
 
     /**
@@ -119,32 +129,56 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
     }
 
     /**
-     * Méthode appelé lorsque là carte est prête
+     * Méthode appelée lorsque la carte est prête à être utilisée
      * @param googleMap
      */
     @Override
     public void onMapReady(final com.google.android.gms.maps.GoogleMap googleMap) {
         googleMapCourante = googleMap;
+        creerRequeteLocalisation();
         verifierLocalisation(googleMap);
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         googleMap.setMyLocationEnabled(true);
-        locationClient.getLastLocation()
+
+        // Récupère la dernière localisation connu au démarrage de l'application
+        serviceLocalisationClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            changerLocalisationCamera(location);
+                    public void onSuccess(Location localisation) {
+                        if (localisation != null) {
+                            changerLocalisationCamera(localisation, 15);
                         }
                     }
                 });
 
+        //A chaque nouvelle mise à jour de la localisation, le code passe dans cette méthode
+        miseAJourLocalisation = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult resultatLocalisation) {
+                for (Location localisation : resultatLocalisation.getLocations()) {
+                    Log.d(TAG, "onLocationResult: " + localisation.getLongitude());
+                }
+            }
+        };
 
+        //Active la récupération régulière des données de localisation
+        serviceLocalisationClient.requestLocationUpdates(requeteLocalisation, miseAJourLocalisation, null);
     }
 
     /**
-     * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de location
+     * Méthode qui défini les paramètres de la localisation
+     */
+    protected void creerRequeteLocalisation() {
+        requeteLocalisation = new LocationRequest();
+        requeteLocalisation.setInterval(10000);
+        requeteLocalisation.setFastestInterval(5000);
+        requeteLocalisation.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    /**
+     * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de localisation
      * @param googleMap
      */
     public void verifierLocalisation(com.google.android.gms.maps.GoogleMap googleMap) {
@@ -180,9 +214,14 @@ public class GoogleMap extends Fragment implements ActivityCompat.OnRequestPermi
         }
     }
 
-    private void changerLocalisationCamera(Location nouvelleLocalisation) {
+
+    /**
+     * Méthode qui déplace la caméra vers une nouvelle localisation
+     * @param nouvelleLocalisation
+     */
+    private void changerLocalisationCamera(Location nouvelleLocalisation, int niveauZoom) {
         CameraUpdate pointACentrer = CameraUpdateFactory.newLatLng(new LatLng(nouvelleLocalisation.getLatitude(), nouvelleLocalisation.getLongitude()));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(1);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(niveauZoom);
         googleMapCourante.moveCamera(pointACentrer);
         googleMapCourante.animateCamera(zoom);
     }
