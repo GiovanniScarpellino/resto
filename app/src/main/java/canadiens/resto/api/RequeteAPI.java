@@ -43,7 +43,7 @@ public class RequeteAPI {
      * @param actionsResultatDemande Methodes a executer en cas de reussite ou d'echec de la demande vers l'API
      */
     @SuppressLint("StaticFieldLeak")
-    public RequeteAPI(String typeRequete, JSONObject parametres, final ActionsResultatAPI actionsResultatDemande){
+    public static void effectuerRequete(String typeRequete, JSONObject parametres, final ActionsResultatAPI actionsResultatDemande){
         //Creation de l'URL entiere
         final String url = genererURL(typeRequete, parametres.toString());
         //Creation et demarrage de la tache asynchrone qui acceder et lire l'API
