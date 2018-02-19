@@ -37,7 +37,7 @@ public class RequeteAPI {
     }
 
     /**
-     * Contructeur de la classe RequeteAPI
+     * Methode qui effectue une requete vers l'API avec des parametres donnes et qui effectue une action a la fin
      * @param typeRequete Type de la requete ciblee (Les types de requetes sont disponibles dans la classe TypeRequeteAPI)
      * @param parametres Parametres de la requete (JSONObject)
      * @param actionsResultatDemande Methodes a executer en cas de reussite ou d'echec de la demande vers l'API
