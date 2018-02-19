@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import canadiens.resto.R;
+import canadiens.resto.api.ActionsResultatAPI;
+import canadiens.resto.api.RequeteAPI;
+import canadiens.resto.api.TypeRequeteAPI;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;
     protected EditText champsMDP;
 
-    protected Button btnConnection;
+    protected Button btnConnexion;
     protected Button btnClient;
     protected Button btnRestaurant;
 
@@ -24,13 +31,11 @@ public class VueConnexion extends AppCompatActivity {
 
         champsIdentifiant = (EditText) findViewById(R.id.champ_identifiant);
         champsMDP = (EditText) findViewById(R.id.champ_mdp);
-        btnConnection = (Button) findViewById(R.id.action_connexion);
+        btnConnexion = (Button) findViewById(R.id.action_connexion);
         btnClient = (Button) findViewById(R.id.action_inscription_client);
         btnRestaurant = (Button) findViewById(R.id.action_inscription_restaurant);
 
         ajouterEcouteur();
-
-
 
         Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipale.class);
         //startActivity(intentionVersHamburgerMenu);
@@ -54,6 +59,29 @@ public class VueConnexion extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentionVersInscriptionRestaurant = new Intent(VueConnexion.this, VueInscriptionRestaurant.class);
                 startActivity(intentionVersInscriptionRestaurant);
+            }
+        });
+
+        btnConnexion.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                try{
+                    JSONObject parametres = new JSONObject();
+                    parametres.put("login", champsIdentifiant.getText());
+                    parametres.put("motDePasse", champsMDP.getText());
+
+                    RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, parametres, new ActionsResultatAPI() {
+                        @Override
+                        public void quandErreur() {
+                            Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                        public void quandSucces(JSONObject donnees) throws JSONException {
+                            Toast.makeText(getApplicationContext(), donnees.get("token").toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                catch(JSONException e) { e.printStackTrace(); }
             }
         });
     }
