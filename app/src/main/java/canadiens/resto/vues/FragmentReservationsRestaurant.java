@@ -1,14 +1,11 @@
 package canadiens.resto.vues;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,7 +28,7 @@ public class FragmentReservationsRestaurant extends Fragment {
     private static final String TOKEN = "a3b7620bde9f123ca56d52224a01faa2";
 
     private ListView listeReservations;
-    private Button btnRafraichirReservations;
+    private Button actionRafraichirReservations;
 
     public FragmentReservationsRestaurant() {
         // Required empty public constructor
@@ -48,9 +45,9 @@ public class FragmentReservationsRestaurant extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listeReservations = (ListView) view.findViewById(R.id.liste_reservations_restaurant);
-        btnRafraichirReservations = (Button) view.findViewById(R.id.btn_rafraichir_reservations_restaurant);
+        actionRafraichirReservations = (Button) view.findViewById(R.id.action_rafraichir_reservations_restaurant);
 
-        btnRafraichirReservations.setOnClickListener(new View.OnClickListener(){
+        actionRafraichirReservations.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 recupererEtAfficherClassement();
@@ -107,10 +104,5 @@ public class FragmentReservationsRestaurant extends Fragment {
             });
         }
         catch(Exception e){e.printStackTrace();}
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

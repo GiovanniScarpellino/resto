@@ -32,7 +32,7 @@ public class VuePrincipale extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        changerDeFragment(TypeFragment.GoogleMap);
+        changerDeFragment(TypeFragment.ModificationRestaurant);
     }
 
     @Override
@@ -97,12 +97,17 @@ public class VuePrincipale extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                     .replace(R.id.conteneur_principal,new GoogleMapFragment())
                     .commit();
-            break;
+                break;
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal, new FragmentReservationsRestaurant())
                         .commit();
-            break;
+                break;
+            case ModificationRestaurant:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principal, new FragmentModificationRestaurant())
+                        .commit();
+                break;
         }
     }
 

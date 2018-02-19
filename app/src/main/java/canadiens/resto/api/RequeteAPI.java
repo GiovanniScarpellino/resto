@@ -28,7 +28,7 @@ public class RequeteAPI {
      */
     private static String genererURL(String typeRequete, String parametres){
         try{
-            return API_URL + "/" + typeRequete + "/" + URLEncoder.encode(parametres, "UTF-8");
+            return API_URL + "/" + typeRequete + "/" + URLEncoder.encode(parametres, "UTF-8").replace("+", "%20");
         }
         catch(Exception e){
             Log.e("Erreur encodage URL", e.getMessage());
@@ -56,8 +56,8 @@ public class RequeteAPI {
                     HttpURLConnection connexion = (HttpURLConnection) urlRequete.openConnection();
                     //Definition des parametres de la connexion
                     connexion.setRequestMethod("GET");
-                    connexion.setReadTimeout(15000);
-                    connexion.setConnectTimeout(15000);
+                    connexion.setReadTimeout(12000);
+                    connexion.setConnectTimeout(12000);
                     //Connexion a l'URL
                     connexion.connect();
 
