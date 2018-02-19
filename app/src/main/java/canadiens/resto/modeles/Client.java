@@ -6,7 +6,7 @@ package canadiens.resto.modeles;
 
 public class Client {
 
-    private String idRestaurant;
+    private String idClient;
     private String nom;
     private String telephone;
     private String mail;
@@ -17,8 +17,8 @@ public class Client {
 
     }
 
-    public Client(String idRestaurant, String nom, String telephone, String mail, String motDePasse) {
-        this.idRestaurant = idRestaurant;
+    public Client(String idClient, String nom, String telephone, String mail, String motDePasse) {
+        this.idClient = idClient;
         this.nom = nom;
         this.telephone = telephone;
         this.mail = mail;
@@ -33,11 +33,11 @@ public class Client {
     }
 
     public String getIdRestaurant() {
-        return idRestaurant;
+        return idClient;
     }
 
     public void setIdRestaurant(String idRestaurant) {
-        this.idRestaurant = idRestaurant;
+        this.idClient = idClient;
     }
 
     public String getNom() {
@@ -75,7 +75,7 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "idRestaurant='" + idRestaurant + '\'' +
+                "idClient='" + idClient + '\'' +
                 ", nom='" + nom + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", mail='" + mail + '\'' +
