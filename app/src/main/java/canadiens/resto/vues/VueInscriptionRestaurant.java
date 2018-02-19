@@ -6,8 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import canadiens.resto.R;
+import canadiens.resto.api.ActionsResultatAPI;
+import canadiens.resto.api.RequeteAPI;
+import canadiens.resto.api.TypeRequeteAPI;
 
 public class VueInscriptionRestaurant extends AppCompatActivity {
 
@@ -52,7 +59,29 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
         btnValider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+                try{
+                    JSONObject parametres = new JSONObject();
+                    parametres.put("nom", champNom.getText());
+                    parametres.put("description", champDescription.getText());
+                    parametres.put("adresse", champAdresse.getText());
+                    parametres.put("latitude", champLatitude.getText());
+                    parametres.put("longitude", champLongitude.getText());
+                    parametres.put("telephone", champTel.getText());
+                    parametres.put("mail", champMail.getText());
+                    parametres.put("motDePasse", champMDP.getText());
+
+                    RequeteAPI.effectuerRequete(TypeRequeteAPI.INSCRIPTION_RESTAURANT, parametres, new ActionsResultatAPI() {
+                        @Override
+                        public void quandErreur() {
+                            Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                        public void quandSucces(JSONObject donnees) throws JSONException {
+                            Toast.makeText(getApplicationContext(), donnees.get("token").toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                catch(JSONException e) { e.printStackTrace(); }
             }
         });
 
