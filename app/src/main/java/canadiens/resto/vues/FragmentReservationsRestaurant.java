@@ -83,7 +83,7 @@ public class FragmentReservationsRestaurant extends Fragment {
 
                         HashMap<String, String> reservationHashMap = new HashMap<>();
 
-                        reservationHashMap.put("heure", reservationActuelle.getString("heure").substring(0,5));
+                        reservationHashMap.put("heure", reservationActuelle.getString("heure"));
                         reservationHashMap.put("nombrePersonnes", reservationActuelle.getString("nombrePersonnes") + " personnes");
                         reservationHashMap.put("nomClient", reservationActuelle.getString("nomClient"));
                         reservationHashMap.put("telephoneClient", reservationActuelle.getString("telephoneClient"));
