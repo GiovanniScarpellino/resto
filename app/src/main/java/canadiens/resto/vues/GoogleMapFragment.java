@@ -40,7 +40,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,8 +155,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         googleMapCourante = googleMap;
         creerRequeteLocalisation();
         verifierLocalisationActivee(googleMap);
-
-
+        
         //Demande la permission à l'utilisateur pour utiliser la localisation
         String permissions[] = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (ActivityCompat.checkSelfPermission(getContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED) {
@@ -182,6 +180,15 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                 return vueMarqueur;
             }
         });
+        
+        googleMapCourante.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Log.d(TAG, "onInfoWindowClick: ID : " + marker.getSnippet());
+            }
+        });
+        
+        
     }
 
     /**
@@ -246,6 +253,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             @Override
             public void onLocationResult(LocationResult resultatLocalisation) {
                 for (Location localisation : resultatLocalisation.getLocations()) {
+                    recupererRestaurantProche(localisation.getLatitude(), localisation.getLongitude());
                 }
             }
         };
@@ -303,14 +311,26 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         googleMapCourante.animateCamera(zoom);
     }
 
+    /**
+     * Affiche tout les restaurants contenu dans la liste sur la Google Map
+     * @param listeRestaurant
+     */
     private void afficherPinRestaurant(List<Restaurant> listeRestaurant) {
+        effacerToutLesMarqueurs();
         for(Restaurant restaurant : listeRestaurant) {
-            googleMapCourante.addMarker(new MarkerOptions()
-                    .position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude())))
-                    .setTitle(restaurant.getNom());
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
+            markerOptions.title(restaurant.getNom());
+            markerOptions.snippet(restaurant.getIdRestaurant());
+            googleMapCourante.addMarker(markerOptions);
         }
     }
 
+    /**
+     * Récupère tout les restaurants depuis l'API en fonction de la position
+     * @param latitude
+     * @param longitude
+     */
     private void recupererRestaurantProche(double latitude, double longitude) {
         JSONObject jsonDonnees = new JSONObject();
         try {
@@ -342,6 +362,10 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                 afficherPinRestaurant(listeRestaurant);
             }
         });
+    }
+
+    private void effacerToutLesMarqueurs() {
+        googleMapCourante.clear();
     }
 
     public interface OnFragmentInteractionListener {
