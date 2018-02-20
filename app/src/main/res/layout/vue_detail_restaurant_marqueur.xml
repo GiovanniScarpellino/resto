@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background_border">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/champs_texte_detail_marqueur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""/>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="75dp">
 
         <Button
             android:id="@+id/bouton_detail_marqueur"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/champs_texte_description_detail_marqueur"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
             android:text="@string/texte_bouton_detail_marqueur" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/champs_texte_detail_marqueur"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/champs_texte_description_detail_marqueur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/champs_texte_detail_marqueur"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:textColor="@android:color/holo_red_dark" />
+
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
