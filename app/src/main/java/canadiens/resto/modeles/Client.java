@@ -8,6 +8,7 @@ public class Client {
 
     private String idClient;
     private String nom;
+    private String prenom;
     private String telephone;
     private String mail;
     private String motDePasse;
@@ -17,9 +18,10 @@ public class Client {
 
     }
 
-    public Client(String idClient, String nom, String telephone, String mail, String motDePasse) {
+    public Client(String idClient, String nom, String prenom, String telephone, String mail, String motDePasse) {
         this.idClient = idClient;
         this.nom = nom;
+        this.prenom = prenom;
         this.telephone = telephone;
         this.mail = mail;
         this.motDePasse = motDePasse;
@@ -27,6 +29,7 @@ public class Client {
 
     public Client(String nom, String telephone, String mail, String motDePasse) {
         this.nom = nom;
+        this.prenom = prenom;
         this.telephone = telephone;
         this.mail = mail;
         this.motDePasse = motDePasse;
@@ -72,11 +75,20 @@ public class Client {
         this.motDePasse = motDePasse;
     }
 
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
                 "idClient='" + idClient + '\'' +
                 ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", mail='" + mail + '\'' +
                 ", motDePasse='" + motDePasse + '\'' +
