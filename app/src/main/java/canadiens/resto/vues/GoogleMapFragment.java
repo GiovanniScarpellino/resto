@@ -367,6 +367,9 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         });
     }
 
+    /**
+     * Méthode qui efface tout les marqueurs de la Google Map
+     */
     private void effacerToutLesMarqueurs() {
         googleMapCourante.clear();
     }
