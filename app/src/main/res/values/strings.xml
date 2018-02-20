@@ -10,4 +10,7 @@
     <string name="indication_fenetre_location">"L'application doit avoir accès à la localisation pour son bon fonctionemment, voulez-vous l'activer ?</string>
     <string name="bouton_oui">oui</string>
     <string name="bouton_non">non, merci</string>
+
+    <!--vue_detail_restaurant_marqueur String-->
+    <string name="texte_bouton_detail_marqueur">Details</string>
 </resources>
