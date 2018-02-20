@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,12 +33,20 @@ import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import canadiens.resto.R;
+import canadiens.resto.api.ActionsResultatAPI;
+import canadiens.resto.api.RequeteAPI;
+import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.modeles.Restaurant;
 
 public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
@@ -59,8 +68,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
     private LocationRequest requeteLocalisation;
     private LocationCallback miseAJourLocalisation;
 
-    private InfoWindowAdapter fenetreInformation;
-
+    private RequeteAPI requeteAPI;
 
     public GoogleMapFragment() {
 
@@ -89,6 +97,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         serviceLocalisationClient = LocationServices.getFusedLocationProviderClient(getContext());
+        requeteAPI = new RequeteAPI();
     }
 
     /**
@@ -101,7 +110,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate le layout pour ce fragment
         SupportMapFragment mapCourante;
         View vue = inflater.inflate(R.layout.fragment_google_map, container, false);
         mapCourante = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -154,6 +163,31 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         } else {
             requestPermissions(permissions, CODE_REQUETE);
         }
+
+
+        Restaurant restaurant1 = new Restaurant("1", "pizza", "1 rue machin", 47.05, 5.8167, "03", "mail", "mdp", "description1");
+        Restaurant restaurant2 = new Restaurant("1", "crepe", "1 rue machin", 47.15, 5.8167, "03", "mail", "mdp", "description2");
+        List<Restaurant> listeRestaurant = new ArrayList<>();
+        listeRestaurant.add(restaurant1);
+        listeRestaurant.add(restaurant2);
+        afficherPinRestaurant(listeRestaurant);
+
+        //Lors du clique sur un marqueur, appel les deux fonctions en envoyant le marqueur courant. Et change sa vue en fonction des paramètres du marqueurs
+        googleMapCourante.setInfoWindowAdapter(new InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                View vueMarqueur = inflater.inflate(R.layout.vue_detail_restaurant_marqueur, null, false);
+                TextView champstexteCourant = vueMarqueur.findViewById(R.id.champs_texte_detail_marqueur);
+                champstexteCourant.setText(marker.getTitle());
+                return vueMarqueur;
+            }
+        });
     }
 
     /**
@@ -208,6 +242,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                     public void onSuccess(Location localisation) {
                         if (localisation != null) {
                             changerLocalisationCamera(localisation, 17);
+                            recupererRestaurantProche(localisation.getLatitude(), localisation.getLongitude());
                         }
                     }
                 });
@@ -283,9 +318,28 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         }
     }
 
+    private void recupererRestaurantProche(double latitude, double longitude) {
+        JSONObject jsonDonnees = new JSONObject();
+        try {
+            jsonDonnees.put("latitude", latitude);
+            jsonDonnees.put("longitude", longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, jsonDonnees, new ActionsResultatAPI() {
+            @Override
+            public void quandErreur() {
+                Toast.makeText(getContext(), "Erreur synchronisation avec l'API, veuillez patienter", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void quandSucces(JSONObject donnees) throws JSONException {
+
+            }
+        });
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

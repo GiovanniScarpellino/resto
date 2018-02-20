@@ -20,8 +20,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
 
     protected EditText champNom;
     protected EditText champAdresse;
-    protected EditText champLatitude;
-    protected EditText champLongitude;
     protected EditText champTel;
     protected EditText champMail;
     protected EditText champDescription;
@@ -38,8 +36,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
 
         champNom  = (EditText) findViewById(R.id.champ_nom);
         champAdresse  = (EditText) findViewById(R.id.champ_adresse);
-        champLatitude  = (EditText) findViewById(R.id.champ_latitude);
-        champLongitude  = (EditText) findViewById(R.id.champ_longitude);
         champTel  = (EditText) findViewById(R.id.champ_telephone);
         champMail  = (EditText) findViewById(R.id.champ_mail);
         champDescription  = (EditText) findViewById(R.id.champ_description);
@@ -64,8 +60,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                     parametres.put("nom", champNom.getText());
                     parametres.put("description", champDescription.getText());
                     parametres.put("adresse", champAdresse.getText());
-                    parametres.put("latitude", champLatitude.getText());
-                    parametres.put("longitude", champLongitude.getText());
                     parametres.put("telephone", champTel.getText());
                     parametres.put("mail", champMail.getText());
                     parametres.put("motDePasse", champMDP.getText());
