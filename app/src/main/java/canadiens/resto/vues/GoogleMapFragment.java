@@ -173,10 +173,13 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
 
             @Override
             public View getInfoContents(Marker marker) {
+                String[] tableauInformation = marker.getSnippet().split("/");
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View vueMarqueur = inflater.inflate(R.layout.vue_detail_restaurant_marqueur, null, false);
                 TextView champstexteCourant = vueMarqueur.findViewById(R.id.champs_texte_detail_marqueur);
                 champstexteCourant.setText(marker.getTitle());
+                TextView texteDescriptionDetailMarqueur = vueMarqueur.findViewById(R.id.champs_texte_description_detail_marqueur);
+                texteDescriptionDetailMarqueur.setText(tableauInformation[1]);
                 return vueMarqueur;
             }
         });
@@ -321,7 +324,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
             markerOptions.title(restaurant.getNom());
-            markerOptions.snippet(restaurant.getIdRestaurant());
+            markerOptions.snippet(restaurant.getIdRestaurant() + "/" + restaurant.getDescription());
             googleMapCourante.addMarker(markerOptions);
         }
     }
