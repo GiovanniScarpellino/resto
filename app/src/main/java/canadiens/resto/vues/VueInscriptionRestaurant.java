@@ -26,7 +26,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
     protected EditText champMDP;
 
     protected Button btnValider;
-    protected Button btnRetour;
 
 
     @Override
@@ -41,7 +40,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
         champDescription  = (EditText) findViewById(R.id.champ_description);
         champMDP  = (EditText) findViewById(R.id.champ_mdp);
         btnValider = (Button) findViewById(R.id.action_valider);
-        btnRetour = (Button) findViewById(R.id.action_retour);
 
         ajouterEcouteur();
 
@@ -77,13 +75,6 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                 }
                 catch(JSONException e) { e.printStackTrace(); }
             }
-        });
-
-        btnRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    finish();
-                }
         });
     }
 }
