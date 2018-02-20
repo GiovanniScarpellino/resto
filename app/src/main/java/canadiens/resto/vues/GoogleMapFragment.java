@@ -242,7 +242,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
                     public void onSuccess(Location localisation) {
                         if (localisation != null) {
                             changerLocalisationCamera(localisation, 17);
-                            recupererRestaurantProche();
+                            recupererRestaurantProche(localisation.getLatitude(), localisation.getLongitude());
                         }
                     }
                 });
@@ -318,15 +318,15 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         }
     }
 
-    private void recupererRestaurantProche(LatLng latLng) {
+    private void recupererRestaurantProche(double latitude, double longitude) {
         JSONObject jsonDonnees = new JSONObject();
         try {
-            jsonDonnees.put("latitude", latLng.latitude);
-            jsonDonnees.put("longitude", latLng.longitude);
+            jsonDonnees.put("latitude", latitude);
+            jsonDonnees.put("longitude", longitude);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        requeteAPI.effectuerRequete(TypeRequeteAPI.RESTAURANTS_PROCHES, jsonDonnees, new ActionsResultatAPI() {
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
                 Toast.makeText(getContext(), "Erreur synchronisation avec l'API, veuillez patienter", Toast.LENGTH_LONG).show();
