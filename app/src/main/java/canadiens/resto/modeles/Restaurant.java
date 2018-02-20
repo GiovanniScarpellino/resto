@@ -26,6 +26,14 @@ public class Restaurant {
         this.description = description;
     }
 
+    public Restaurant(String idRestaurant, String nom, double longitude, double latitude, String description) {
+        this.idRestaurant = idRestaurant;
+        this.nom = nom;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.description = description;
+    }
+
     public Restaurant(String nom, String adresse, double longitude, double latitude, String telephone, String mail, String motDePasse, String description) {
         this.nom = nom;
         this.adresse = adresse;

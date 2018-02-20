@@ -37,8 +37,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,14 +166,6 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             requestPermissions(permissions, CODE_REQUETE);
         }
 
-
-        Restaurant restaurant1 = new Restaurant("1", "pizza", "1 rue machin", 47.05, 5.8167, "03", "mail", "mdp", "description1");
-        Restaurant restaurant2 = new Restaurant("1", "crepe", "1 rue machin", 47.15, 5.8167, "03", "mail", "mdp", "description2");
-        List<Restaurant> listeRestaurant = new ArrayList<>();
-        listeRestaurant.add(restaurant1);
-        listeRestaurant.add(restaurant2);
-        afficherPinRestaurant(listeRestaurant);
-
         //Lors du clique sur un marqueur, appel les deux fonctions en envoyant le marqueur courant. Et change sa vue en fonction des paramètres du marqueurs
         googleMapCourante.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
@@ -252,7 +246,6 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             @Override
             public void onLocationResult(LocationResult resultatLocalisation) {
                 for (Location localisation : resultatLocalisation.getLocations()) {
-                    Log.d(TAG, "onLocationResult: " + localisation.getLongitude());
                 }
             }
         };
@@ -313,7 +306,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
     private void afficherPinRestaurant(List<Restaurant> listeRestaurant) {
         for(Restaurant restaurant : listeRestaurant) {
             googleMapCourante.addMarker(new MarkerOptions()
-                    .position(new LatLng(restaurant.getLongitude(), restaurant.getLatitude())))
+                    .position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude())))
                     .setTitle(restaurant.getNom());
         }
     }
@@ -326,7 +319,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, jsonDonnees, new ActionsResultatAPI() {
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.RESTAURANTS_PROCHES, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
                 Toast.makeText(getContext(), "Erreur synchronisation avec l'API, veuillez patienter", Toast.LENGTH_LONG).show();
@@ -334,7 +327,19 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-
+                List<Restaurant> listeRestaurant = new ArrayList<>();
+                JSONArray tableauRestaurant = donnees.getJSONArray("restaurants");
+                for(int i = 0; i < tableauRestaurant.length(); i++) {
+                    JSONObject restaurantCourant = tableauRestaurant.getJSONObject(i);
+                    String idRestaurant = restaurantCourant.getString("idRestaurant");
+                    String nom = restaurantCourant.getString("nom");
+                    double longitude = restaurantCourant.getDouble("longitude");
+                    double latitude = restaurantCourant.getDouble("latitude");
+                    String description = restaurantCourant.getString("description");
+                    Restaurant restaurant = new Restaurant(idRestaurant, nom, longitude, latitude, description);
+                    listeRestaurant.add(restaurant);
+                }
+                afficherPinRestaurant(listeRestaurant);
             }
         });
     }
