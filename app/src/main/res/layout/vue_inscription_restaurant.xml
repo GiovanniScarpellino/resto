@@ -26,24 +26,6 @@
         tools:layout_editor_absoluteY="29dp" />
 
     <EditText
-        android:id="@+id/champ_latitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Latitude"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <EditText
-        android:id="@+id/champ_longitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Longitude"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <EditText
         android:id="@+id/champ_telephone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
