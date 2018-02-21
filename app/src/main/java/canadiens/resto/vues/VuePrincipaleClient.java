@@ -13,13 +13,13 @@ import android.view.MenuItem;
 
 import canadiens.resto.R;
 
-public class VuePrincipale extends AppCompatActivity
+public class VuePrincipaleClient extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleMapFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vue_principale);
+        setContentView(R.layout.vue_principale_client);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,7 +32,7 @@ public class VuePrincipale extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        changerDeFragment(TypeFragment.ModificationRestaurant);
+        changerDeFragment(TypeFragment.GoogleMap);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class VuePrincipale extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.vue_principale, menu);
+        getMenuInflater().inflate(R.menu.item_menu_parametres_client, menu);
         return true;
     }
 

@@ -13,4 +13,5 @@
 
     <!--vue_detail_restaurant_marqueur String-->
     <string name="texte_bouton_detail_marqueur">Details</string>
+    <string name="title_activity_vue_principale_restaurant">VuePrincipaleRestaurant</string>
 </resources>

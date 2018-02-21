@@ -37,7 +37,7 @@ public class VueConnexion extends AppCompatActivity {
 
         ajouterEcouteur();
 
-        Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipale.class);
+        Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipaleClient.class);
         //startActivity(intentionVersHamburgerMenu);
     }
 

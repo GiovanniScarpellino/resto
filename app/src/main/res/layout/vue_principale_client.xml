@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_vue_principale"
+        layout="@layout/barre_application_vue_principale_client"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_vue_principale"
-        app:menu="@menu/vue_principale_drawer" />
+        app:headerLayout="@layout/entete_hamburger_vue_principale_client"
+        app:menu="@menu/item_menu_hamburger_client" />
 
 </android.support.v4.widget.DrawerLayout>
