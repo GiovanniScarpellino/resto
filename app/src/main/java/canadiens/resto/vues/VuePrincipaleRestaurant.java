@@ -15,6 +15,8 @@ import canadiens.resto.R;
 public class VuePrincipaleRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         changerDeFragment(TypeFragment.ReservationsRestaurant);
@@ -73,7 +75,11 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id){
-            case R.id.nav_camera:
+            case R.id.nav_reservations_restaurant:
+                changerDeFragment(TypeFragment.ReservationsRestaurant);
+                break;
+            case R.id.nav_modification_profile_restaurant:
+                changerDeFragment(TypeFragment.ModificationRestaurant);
                 break;
         }
 
@@ -88,11 +94,13 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant())
                         .commit();
+                navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
                 break;
             case ModificationRestaurant:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant())
                         .commit();
+                navigationView.setCheckedItem(R.id.nav_modification_profile_restaurant);
                 break;
         }
     }

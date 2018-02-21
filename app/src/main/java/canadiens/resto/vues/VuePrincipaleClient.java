@@ -16,6 +16,8 @@ import canadiens.resto.R;
 public class VuePrincipaleClient extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleMapFragment.OnFragmentInteractionListener {
 
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class VuePrincipaleClient extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         changerDeFragment(TypeFragment.GoogleMap);
@@ -74,7 +76,8 @@ public class VuePrincipaleClient extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id){
-            case R.id.nav_camera:
+            case R.id.nav_google_map:
+                changerDeFragment(TypeFragment.GoogleMap);
                 break;
         }
 
@@ -89,6 +92,19 @@ public class VuePrincipaleClient extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                     .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
                     .commit();
+                navigationView.setCheckedItem(R.id.nav_google_map);
+                break;
+            case ModificationClient:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
+                        .commit();
+                navigationView.setCheckedItem(R.id.nav_modification_profile_client);
+                break;
+            case ReservationsClient:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
+                        .commit();
+                navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
         }
     }
