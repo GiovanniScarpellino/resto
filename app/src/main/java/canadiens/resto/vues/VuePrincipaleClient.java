@@ -98,16 +98,6 @@ public class VuePrincipaleClient extends AppCompatActivity
                     .replace(R.id.conteneur_principal,new GoogleMapFragment())
                     .commit();
                 break;
-            case ReservationsRestaurant:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal, new FragmentReservationsRestaurant())
-                        .commit();
-                break;
-            case ModificationRestaurant:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal, new FragmentModificationRestaurant())
-                        .commit();
-                break;
         }
     }
 

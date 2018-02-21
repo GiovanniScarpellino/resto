@@ -93,11 +93,6 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
 
     private void changerDeFragment(TypeFragment fragment) {
         switch (fragment) {
-            case GoogleMap:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal,new GoogleMapFragment())
-                        .commit();
-                break;
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal, new FragmentReservationsRestaurant())
