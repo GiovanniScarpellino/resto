@@ -77,7 +77,16 @@ public class VueConnexion extends AppCompatActivity {
                         }
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
-                            Toast.makeText(getApplicationContext(), donnees.get("token").toString(), Toast.LENGTH_LONG).show();
+                            switch (donnees.get("type").toString()){
+                                case "client":
+                                    Intent intentionClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
+                                    startActivity(intentionClient);
+                                    break;
+                                case "restaurant":
+                                    Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                                    startActivity(intentionRestaurant);
+                                    break;
+                            }
                         }
                     });
                 }
