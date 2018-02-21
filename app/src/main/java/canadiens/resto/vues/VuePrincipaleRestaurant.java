@@ -1,6 +1,5 @@
 package canadiens.resto.vues;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +18,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vue_principale_client);
+        setContentView(R.layout.vue_principale_restaurant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,7 +47,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.item_menu_parametres_client, menu);
+        getMenuInflater().inflate(R.menu.item_menu_hamburger_restaurant, menu);
         return true;
     }
 
@@ -73,17 +72,9 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        switch (id){
+            case R.id.nav_camera:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,12 +86,12 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         switch (fragment) {
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal, new FragmentReservationsRestaurant())
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant())
                         .commit();
                 break;
             case ModificationRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal, new FragmentModificationRestaurant())
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant())
                         .commit();
                 break;
         }

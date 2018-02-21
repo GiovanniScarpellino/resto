@@ -73,17 +73,9 @@ public class VuePrincipaleClient extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        switch (id){
+            case R.id.nav_camera:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,7 +87,7 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal,new GoogleMapFragment())
+                    .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
                     .commit();
                 break;
         }
