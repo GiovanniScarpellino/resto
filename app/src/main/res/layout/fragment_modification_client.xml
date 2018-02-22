@@ -5,4 +5,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="canadiens.resto.vues.FragmentModificationClient">
+
+    <EditText
+        android:id="@+id/champ_nom_client_modif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nom"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/champ_prenom_client_modif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Prenom"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/champ_tel_client_modif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Telephone"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/champ_mail_client_modif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Mail"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/champ_mdp_client_modif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Mote de passe"
+        android:inputType="textPersonName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bouton_valider_client_modif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Valider" />
+
+        <Button
+            android:id="@+id/bouton_retour_client_modif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Retour" />
+    </LinearLayout>
 </LinearLayout>
