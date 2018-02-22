@@ -69,7 +69,9 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                         }
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
-                            Toast.makeText(getApplicationContext(), donnees.get("token").toString(), Toast.LENGTH_LONG).show();
+                            Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                            intentionRestaurant.putExtra("token", donnees.get("token").toString());
+                            startActivity(intentionRestaurant);
                         }
                     });
                 }
