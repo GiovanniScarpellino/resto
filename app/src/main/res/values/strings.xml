@@ -17,6 +17,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    
+    <!--ACTIVITE PARAMETRE -->
+    <string name="titre_groupe_parametre_general">Paramètre localisation</string>
+    <string name="titre_champs_texte_rayon">Rayon de recherche</string>
+
+    <string name="cle_groupe_parametre_general">groupe_parametre_general</string>
+    <string name="cle_champs_texte_rayon">champs_texte_rayon</string>
+
+    <string name="valeur_defaut_rayon">10</string>
+
     <string name="title_activity_vue_parametre_client">Parametre</string>
 
     <!-- Strings related to Settings -->
@@ -90,4 +100,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <!--FIN ACTIVITE PARAMETRE-->
 </resources>

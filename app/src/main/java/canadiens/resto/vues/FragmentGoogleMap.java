@@ -5,11 +5,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -71,7 +73,9 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
     private RequeteAPI requeteAPI;
 
-    private final int RAYON_RESTAURANT_PROCHE = 15;
+    private int rayonRestaurantProche = 15;
+
+    private SharedPreferences preferencePartagees;
 
     public FragmentGoogleMap() {
 
@@ -101,6 +105,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         }
         serviceLocalisationClient = LocationServices.getFusedLocationProviderClient(getContext());
         requeteAPI = new RequeteAPI();
+        preferencePartagees = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     /**
@@ -350,10 +355,13 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      */
     private void recupererRestaurantProche(double latitude, double longitude) {
         JSONObject jsonDonnees = new JSONObject();
+        rayonRestaurantProche = Integer.parseInt(preferencePartagees.getString("champs_texte_rayon","10"));
+        if(rayonRestaurantProche <= 0)
+            rayonRestaurantProche = 1;
         try {
             jsonDonnees.put("latitude", latitude);
             jsonDonnees.put("longitude", longitude);
-            jsonDonnees.put("rayon", RAYON_RESTAURANT_PROCHE);
+            jsonDonnees.put("rayon", rayonRestaurantProche);
         } catch (JSONException e) {
             e.printStackTrace();
         }
