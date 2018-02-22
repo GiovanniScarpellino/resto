@@ -14,4 +14,7 @@
     <!--vue_detail_restaurant_marqueur String-->
     <string name="texte_bouton_detail_marqueur">Details</string>
     <string name="title_activity_vue_principale_restaurant">VuePrincipaleRestaurant</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
