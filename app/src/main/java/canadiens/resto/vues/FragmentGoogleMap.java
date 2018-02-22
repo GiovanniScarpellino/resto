@@ -360,7 +360,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         RequeteAPI.effectuerRequete(TypeRequeteAPI.RESTAURANTS_PROCHES, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
-                Toast.makeText(getContext(), "Erreur synchronisation avec l'API, veuillez patienter", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "quandErreur: Erreur lors de la requête vers l'API");
             }
 
             @Override
