@@ -355,7 +355,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      */
     private void recupererRestaurantProche(double latitude, double longitude) {
         JSONObject jsonDonnees = new JSONObject();
-        rayonRestaurantProche = Integer.parseInt(preferencePartagees.getString("champs_texte_rayon","10"));
+        rayonRestaurantProche = Integer.valueOf(preferencePartagees.getString("champs_texte_rayon","10"));
         if(rayonRestaurantProche <= 0)
             rayonRestaurantProche = 1;
         try {
@@ -365,6 +365,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d(TAG, "recupererRestaurantProche: " + rayonRestaurantProche);
         RequeteAPI.effectuerRequete(TypeRequeteAPI.RESTAURANTS_PROCHES, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {

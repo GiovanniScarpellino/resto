@@ -8,6 +8,7 @@
             android:title="@string/titre_champs_texte_rayon"
             android:key="@string/cle_champs_texte_rayon"
             android:defaultValue="@string/valeur_defaut_rayon"
+            android:numeric="integer"
             />
 
     </PreferenceCategory>
