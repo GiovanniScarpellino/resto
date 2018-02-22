@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import canadiens.resto.R;
 
 public class VuePrincipaleClient extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleMapFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener {
 
     private NavigationView navigationView;
 
@@ -90,19 +90,19 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
+                    .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
+                        .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profile_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client,new GoogleMapFragment())
+                        .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;

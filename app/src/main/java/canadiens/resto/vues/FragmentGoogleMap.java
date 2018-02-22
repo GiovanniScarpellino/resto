@@ -50,7 +50,7 @@ import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.modeles.Restaurant;
 
-public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
+public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
         OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -71,7 +71,9 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
 
     private RequeteAPI requeteAPI;
 
-    public GoogleMapFragment() {
+    private final int RAYON_RESTAURANT_PROCHE = 15;
+
+    public FragmentGoogleMap() {
 
     }
 
@@ -81,8 +83,8 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
      * @param param2
      * @return
      */
-    public static GoogleMapFragment newInstance(String param1, String param2) {
-        GoogleMapFragment fragment = new GoogleMapFragment();
+    public static FragmentGoogleMap newInstance(String param1, String param2) {
+        FragmentGoogleMap fragment = new FragmentGoogleMap();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -174,11 +176,16 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
             @Override
             public View getInfoContents(Marker marker) {
                 String[] tableauInformation = marker.getSnippet().split("/");
+
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 View vueMarqueur = inflater.inflate(R.layout.vue_detail_restaurant_marqueur, null, false);
                 TextView champstexteCourant = vueMarqueur.findViewById(R.id.champs_texte_detail_marqueur);
                 champstexteCourant.setText(marker.getTitle());
                 TextView texteDescriptionDetailMarqueur = vueMarqueur.findViewById(R.id.champs_texte_description_detail_marqueur);
+                if(tableauInformation[1].length() > 40) {
+                    tableauInformation[1] = tableauInformation[1].substring(0, 40);
+                    tableauInformation[1] += "...";
+                }
                 texteDescriptionDetailMarqueur.setText(tableauInformation[1]);
                 return vueMarqueur;
             }
@@ -339,6 +346,7 @@ public class GoogleMapFragment extends Fragment implements ActivityCompat.OnRequ
         try {
             jsonDonnees.put("latitude", latitude);
             jsonDonnees.put("longitude", longitude);
+            jsonDonnees.put("rayon", RAYON_RESTAURANT_PROCHE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
