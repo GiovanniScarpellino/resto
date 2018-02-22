@@ -62,24 +62,25 @@ public class FragmentDetailRestaurant extends Fragment {
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                List<Restaurant> listeRestaurant = new ArrayList<>();
                 JSONArray tableauRestaurant = donnees.getJSONArray("restaurants");
-                JSONObject restaurant = tableauRestaurant.getJSONObject(0);
-                String nom = restaurant.getString("nom");
-                String adresse = restaurant.getString("adresse");
-                String telephone = restaurant.getString("telephone");
-                String mail = restaurant.getString("mail");
-                String description = restaurant.getString("description");
+                JSONObject restaurantJSON = tableauRestaurant.getJSONObject(0);
+                Restaurant restaurant = new Restaurant(
+                        restaurantJSON.getString("nom"),
+                        restaurantJSON.getString("adresse"),
+                        restaurantJSON.getString("telephone"),
+                        restaurantJSON.getString("mail"),
+                        restaurantJSON.getString("description")
+                );
+                String nom = restaurant.getNom();
+                String adresse = restaurant.getAdresse();
+                String telephone = restaurant.getTelephone();
+                String mail = restaurant.getMail();
+                String description = restaurant.getDescription();
 
                 descriptionRestaurant.setText(
                         "Nom :" + nom + "\n Adresse : " + adresse + "\n Telephone : " + telephone + "\n Mail : " + mail + "\n Description : " +description
                 );
             }
         });
-
-
-
-
-
     }
 }
