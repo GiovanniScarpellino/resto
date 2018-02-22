@@ -1,5 +1,6 @@
 package canadiens.resto.vues;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -62,7 +63,9 @@ public class VuePrincipaleClient extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_setting_clients) {
+            Intent intentionVersParametre = new Intent(VuePrincipaleClient.this, VueParametreClient.class);
+            startActivity(intentionVersParametre);
             return true;
         }
 
