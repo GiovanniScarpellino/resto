@@ -3,23 +3,36 @@ package canadiens.resto.vues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import canadiens.resto.R;
+import canadiens.resto.api.ActionsResultatAPI;
+import canadiens.resto.api.RequeteAPI;
+import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.modeles.Restaurant;
 
 public class FragmentDetailRestaurant extends Fragment {
 
-    TextView descriptionRestaurant;
-    Restaurant restaurant;
+    private final String TAG = "Detail restaurant : ";
+
+    private TextView descriptionRestaurant;
+    private int idRestaurant;
 
     public FragmentDetailRestaurant() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,9 +45,41 @@ public class FragmentDetailRestaurant extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO : Résupérer l'instance du restaurant
-
         descriptionRestaurant = view.findViewById(R.id.detail_restaurant);
-        descriptionRestaurant.setText(restaurant.getDescription());
+        idRestaurant = getArguments().getInt("idRestaurant");
+        JSONObject jsonDonnees = new JSONObject();
+        try {
+            jsonDonnees.put("idRestaurant", idRestaurant);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.DETAILS_RESTAURANT, jsonDonnees, new ActionsResultatAPI() {
+            @Override
+            public void quandErreur() {
+                Log.e(TAG, "erreur lors de la requète vers l'API !");
+            }
+
+            @Override
+            public void quandSucces(JSONObject donnees) throws JSONException {
+                List<Restaurant> listeRestaurant = new ArrayList<>();
+                JSONArray tableauRestaurant = donnees.getJSONArray("restaurants");
+                JSONObject restaurant = tableauRestaurant.getJSONObject(0);
+                String nom = restaurant.getString("nom");
+                String adresse = restaurant.getString("adresse");
+                String telephone = restaurant.getString("telephone");
+                String mail = restaurant.getString("mail");
+                String description = restaurant.getString("description");
+
+                descriptionRestaurant.setText(
+                        "Nom :" + nom + "\n Adresse : " + adresse + "\n Telephone : " + telephone + "\n Mail : " + mail + "\n Description : " +description
+                );
+            }
+        });
+
+
+
+
+
     }
 }
