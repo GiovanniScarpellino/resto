@@ -355,7 +355,11 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      */
     private void recupererRestaurantProche(double latitude, double longitude) {
         JSONObject jsonDonnees = new JSONObject();
-        rayonRestaurantProche = Integer.valueOf(preferencePartagees.getString("champs_texte_rayon","10"));
+        try {
+            rayonRestaurantProche = Integer.valueOf(preferencePartagees.getString("champs_texte_rayon","10"));
+        } catch (Exception erreurConversionEnInt) {
+            rayonRestaurantProche = 10;
+        }
         if(rayonRestaurantProche <= 0)
             rayonRestaurantProche = 1;
         try {
