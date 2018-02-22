@@ -1,5 +1,6 @@
 package canadiens.resto.vues;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -68,7 +69,9 @@ public class VueInscriptionClient extends AppCompatActivity {
                         }
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
-                            Toast.makeText(getApplicationContext(), donnees.get("token").toString(), Toast.LENGTH_LONG).show();
+                            Intent intentionClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
+                            intentionClient.putExtra("token", donnees.get("token").toString());
+                            startActivity(intentionClient);
                         }
                     });
                 }
