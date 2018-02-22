@@ -194,7 +194,14 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         googleMapCourante.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Log.d(TAG, "onInfoWindowClick: ID : " + marker.getSnippet());
+                int idRestaurantSelectionné = Integer.parseInt(marker.getSnippet().split("/")[0]);
+                FragmentDetailRestaurant fragmentDetailRestaurant  = new FragmentDetailRestaurant();
+                Bundle argumentAPasser = new Bundle();
+                argumentAPasser.putInt("idRestaurant", idRestaurantSelectionné);
+                fragmentDetailRestaurant.setArguments(argumentAPasser);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principal_client, fragmentDetailRestaurant)
+                        .commit();
             }
         });
         
