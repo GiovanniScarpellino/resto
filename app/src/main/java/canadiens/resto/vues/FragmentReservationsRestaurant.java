@@ -25,10 +25,9 @@ import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 
 public class FragmentReservationsRestaurant extends Fragment {
-    private static final String TOKEN = "a3b7620bde9f123ca56d52224a01faa2";
-
     private ListView listeReservations;
     private Button actionRafraichirReservations;
+    private String token;
 
     public FragmentReservationsRestaurant() {
         // Required empty public constructor
@@ -54,6 +53,8 @@ public class FragmentReservationsRestaurant extends Fragment {
             }
         });
 
+        token = getArguments().getString("token");
+
         recupererEtAfficherClassement();
     }
 
@@ -65,7 +66,7 @@ public class FragmentReservationsRestaurant extends Fragment {
     public void recupererEtAfficherClassement(){
         try {
             JSONObject parametres = new JSONObject();
-            parametres.put("token", TOKEN);
+            parametres.put("token", token);
 
             RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATIONS_RESTAURANT, parametres, new ActionsResultatAPI() {
                 @Override

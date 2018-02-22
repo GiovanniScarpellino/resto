@@ -84,6 +84,7 @@ public class VueConnexion extends AppCompatActivity {
                                     break;
                                 case "restaurant":
                                     Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                                    intentionRestaurant.putExtra("token", donnees.get("token").toString());
                                     startActivity(intentionRestaurant);
                                     break;
                             }
