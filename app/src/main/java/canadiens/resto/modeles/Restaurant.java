@@ -55,6 +55,14 @@ public class Restaurant {
         this.description = description;
     }
 
+    public Restaurant(String nom, String adresse, String telephone, String mail, String description) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.mail = mail;
+        this.description = description;
+    }
+
     public String getIdRestaurant() {
         return idRestaurant;
     }
