@@ -1,6 +1,8 @@
 package canadiens.resto.vues;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,11 @@ public class VueConnexion extends AppCompatActivity {
     protected Button btnClient;
     protected Button btnRestaurant;
 
+    // Token qui sera ensuite placé dans les préférences partagées
+    public final static String TOKEN_UTILISATEUR = "token utilisateur";
+
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +41,9 @@ public class VueConnexion extends AppCompatActivity {
         btnConnexion = (Button) findViewById(R.id.action_connexion);
         btnClient = (Button) findViewById(R.id.action_inscription_client);
         btnRestaurant = (Button) findViewById(R.id.action_inscription_restaurant);
+
+        //Récupère les préférences partagées
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         ajouterEcouteur();
 
@@ -88,6 +98,12 @@ public class VueConnexion extends AppCompatActivity {
                                     startActivity(intentionRestaurant);
                                     break;
                             }
+
+                            // Récupération du token lorsque l'utulisateur s'authentifie puis on le place dans les préférences partagées
+                            String token = donnees.get("token").toString();
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString(TOKEN_UTILISATEUR, token);
+                            editor.commit();
                         }
                     });
                 }
