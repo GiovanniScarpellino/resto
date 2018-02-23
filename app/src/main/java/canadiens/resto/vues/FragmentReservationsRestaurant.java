@@ -23,6 +23,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 public class FragmentReservationsRestaurant extends Fragment {
     private ListView listeReservations;
@@ -53,7 +54,7 @@ public class FragmentReservationsRestaurant extends Fragment {
             }
         });
 
-        token = getArguments().getString("token");
+        token = Token.recupererToken();
 
         recupererEtAfficherClassement();
     }

@@ -25,13 +25,14 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 /**
  * Created by nicog on 20/02/2018.
  */
 
 public class FragmentReservationsClient extends Fragment {
-    private static final String TOKEN = "a3b7620bde9f123ca56d52224a01faa2";
+    private String token;
 
     private ListView listeReservations;
     private Button actionRafraichirReservations;
@@ -60,6 +61,8 @@ public class FragmentReservationsClient extends Fragment {
             }
         });
 
+        token = Token.recupererToken();
+
         recupererEtAfficherClassement();
     }
 
@@ -71,7 +74,7 @@ public class FragmentReservationsClient extends Fragment {
     public void recupererEtAfficherClassement(){
         try {
             JSONObject parametres = new JSONObject();
-            parametres.put("token", TOKEN);
+            parametres.put("token", token);
 
             RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATIONS_CLIENT, parametres, new ActionsResultatAPI() {
                 @RequiresApi(api = Build.VERSION_CODES.M)
