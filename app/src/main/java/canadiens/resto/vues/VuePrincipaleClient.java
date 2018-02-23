@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import canadiens.resto.R;
+import canadiens.resto.modeles.Token;
 
 public class VuePrincipaleClient extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener {

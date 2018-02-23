@@ -17,6 +17,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.modeles.Token;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;
@@ -25,11 +26,6 @@ public class VueConnexion extends AppCompatActivity {
     protected Button btnConnexion;
     protected Button btnClient;
     protected Button btnRestaurant;
-
-    // Token qui sera ensuite placé dans les préférences partagées
-    public final static String TOKEN_UTILISATEUR = "token utilisateur";
-
-    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +37,6 @@ public class VueConnexion extends AppCompatActivity {
         btnConnexion = (Button) findViewById(R.id.action_connexion);
         btnClient = (Button) findViewById(R.id.action_inscription_client);
         btnRestaurant = (Button) findViewById(R.id.action_inscription_restaurant);
-
-        //Récupère les préférences partagées
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         ajouterEcouteur();
 
@@ -99,11 +92,9 @@ public class VueConnexion extends AppCompatActivity {
                                     break;
                             }
 
-                            // Récupération du token lorsque l'utulisateur s'authentifie puis on le place dans les préférences partagées
+                            // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
                             String token = donnees.get("token").toString();
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString(TOKEN_UTILISATEUR, token);
-                            editor.commit();
+                            Token.setToken(token);
                         }
                     });
                 }
