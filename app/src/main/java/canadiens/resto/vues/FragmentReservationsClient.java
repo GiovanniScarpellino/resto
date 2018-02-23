@@ -47,6 +47,7 @@ public class FragmentReservationsClient extends Fragment {
         return inflater.inflate(R.layout.fragment_reservations_client, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +62,7 @@ public class FragmentReservationsClient extends Fragment {
             }
         });
 
-        token = Token.recupererToken();
+        token = Token.recupererToken(getContext());
 
         recupererEtAfficherClassement();
     }

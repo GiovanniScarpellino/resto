@@ -64,7 +64,7 @@ public class FragmentReservationsRestaurant extends Fragment {
     public void recupererEtAfficherClassement(){
         try {
             JSONObject parametres = new JSONObject();
-            parametres.put("token", Token.recupererToken());
+            parametres.put("token", Token.recupererToken(getContext()));
 
             RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATIONS_RESTAURANT, parametres, new ActionsResultatAPI() {
                 @Override

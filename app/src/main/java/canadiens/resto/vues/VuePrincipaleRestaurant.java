@@ -133,7 +133,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
 
     private void deconnecterRestaurant() throws JSONException {
         JSONObject parametres = new JSONObject();
-        parametres.put("token", Token.recupererToken());
+        parametres.put("token", Token.recupererToken(this));
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
             @Override

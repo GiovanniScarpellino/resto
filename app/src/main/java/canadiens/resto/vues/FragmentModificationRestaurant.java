@@ -70,7 +70,7 @@ public class FragmentModificationRestaurant extends Fragment {
         parametres.put("telephone", champTelephone.getText().toString());
         parametres.put("mail", champMail.getText().toString());
         parametres.put("motDePasse", champMotDePasse.getText().toString());
-        parametres.put("token", Token.recupererToken());
+        parametres.put("token", Token.recupererToken(getContext()));
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.MODIFICATION_RESTAURANT, parametres, new ActionsResultatAPI() {
             @Override

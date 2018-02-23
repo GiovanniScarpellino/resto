@@ -74,7 +74,7 @@ public class VueInscriptionClient extends AppCompatActivity {
 
                             // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
                             String token = donnees.get("token").toString();
-                            Token.definirToken(token);
+                            Token.definirToken(getApplicationContext(),token);
 
                             startActivity(intentionClient);
                         }

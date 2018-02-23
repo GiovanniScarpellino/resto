@@ -131,7 +131,7 @@ public class VuePrincipaleClient extends AppCompatActivity
 
     private void deconnecterClient() throws JSONException {
         JSONObject parametres = new JSONObject();
-        parametres.put("token", Token.recupererToken());
+        parametres.put("token", Token.recupererToken(this));
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
             @Override
