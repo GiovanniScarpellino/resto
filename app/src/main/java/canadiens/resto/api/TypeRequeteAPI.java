@@ -2,6 +2,7 @@ package canadiens.resto.api;
 
 public class TypeRequeteAPI {
     public static final String CONNEXION = "Connexion";
+    public static final String DECONNEXION = "Deconnexion";
     public static final String RESTAURANTS_PROCHES = "RestaurantsProches";
     public static final String DETAILS_RESTAURANT = "DetailsRestaurant";
     public static final String RESERVATION = "Reservation";

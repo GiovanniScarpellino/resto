@@ -1,5 +1,6 @@
 package canadiens.resto.vues;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -7,10 +8,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import canadiens.resto.R;
+import canadiens.resto.api.ActionsResultatAPI;
+import canadiens.resto.api.RequeteAPI;
+import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 public class VuePrincipaleRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -85,6 +95,14 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
             case R.id.nav_modification_profile_restaurant:
                 changerDeFragment(TypeFragment.ModificationRestaurant);
                 break;
+            case R.id.nav_deconnexion_restaurant:
+                try {
+                    deconnecterRestaurant();
+                }
+                catch(JSONException e){
+                    Log.e("Deconnexion", "JSONException lors de la déconnexion");
+                }
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,5 +129,22 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.nav_modification_profile_restaurant);
                 break;
         }
+    }
+
+    private void deconnecterRestaurant() throws JSONException {
+        JSONObject parametres = new JSONObject();
+        parametres.put("token", Token.recupererToken());
+
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
+            @Override
+            public void quandErreur() {
+                Toast.makeText(VuePrincipaleRestaurant.this, "Erreur lors de la déconnexion, veuillez réessayer...", Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void quandSucces(JSONObject donnees) throws JSONException {
+                Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleRestaurant.this, VueConnexion.class);
+                startActivity(intentionNaviguerVueConnexion);
+            }
+        });
     }
 }

@@ -16,6 +16,10 @@
             android:id="@+id/nav_modification_profile_client"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Modification du profil" />
+        <item
+            android:id="@+id/nav_deconnexion_client"
+            android:icon="@drawable/ic_menu_deconnexion_24dp"
+            android:title="Déconnexion" />
     </group>
 
 </menu>
