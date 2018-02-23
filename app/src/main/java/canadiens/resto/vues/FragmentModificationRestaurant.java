@@ -17,10 +17,9 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 public class FragmentModificationRestaurant extends Fragment {
-    private static final String TOKEN = "2548fb4657f078ba30e40afd1da2ec13";
-
     private EditText champNom;
     private EditText champDescription;
     private EditText champAdresse;
@@ -71,7 +70,7 @@ public class FragmentModificationRestaurant extends Fragment {
         parametres.put("telephone", champTelephone.getText().toString());
         parametres.put("mail", champMail.getText().toString());
         parametres.put("motDePasse", champMotDePasse.getText().toString());
-        parametres.put("token", TOKEN);
+        parametres.put("token", Token.recupererToken());
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.MODIFICATION_RESTAURANT, parametres, new ActionsResultatAPI() {
             @Override
