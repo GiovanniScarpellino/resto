@@ -1,4 +1,4 @@
-package canadiens.resto.modeles;
+package canadiens.resto.assistants;
 
 /**
  * Created by nicog on 23/02/2018.
@@ -14,7 +14,7 @@ public final class Token {
         token = "";
     }
 
-    public static void setToken(String val) {
+    public static void definirToken(String val) {
         token = val;
     }
     public static String recupererToken() {

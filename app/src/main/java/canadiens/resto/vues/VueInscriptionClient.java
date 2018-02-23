@@ -3,7 +3,6 @@ package canadiens.resto.vues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 /**
  * Created by nicog on 16/02/2018.
@@ -71,6 +71,11 @@ public class VueInscriptionClient extends AppCompatActivity {
                         public void quandSucces(JSONObject donnees) throws JSONException {
                             Intent intentionClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
                             intentionClient.putExtra("token", donnees.get("token").toString());
+
+                            // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
+                            String token = donnees.get("token").toString();
+                            Token.definirToken(token);
+
                             startActivity(intentionClient);
                         }
                     });

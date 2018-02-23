@@ -1,8 +1,6 @@
 package canadiens.resto.vues;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +15,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
-import canadiens.resto.modeles.Token;
+import canadiens.resto.assistants.Token;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;
@@ -94,7 +92,7 @@ public class VueConnexion extends AppCompatActivity {
 
                             // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
                             String token = donnees.get("token").toString();
-                            Token.setToken(token);
+                            Token.definirToken(token);
                         }
                     });
                 }

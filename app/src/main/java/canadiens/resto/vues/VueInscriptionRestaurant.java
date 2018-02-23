@@ -15,6 +15,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 
 public class VueInscriptionRestaurant extends AppCompatActivity {
 
@@ -71,6 +72,11 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                         public void quandSucces(JSONObject donnees) throws JSONException {
                             Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
                             intentionRestaurant.putExtra("token", donnees.get("token").toString());
+
+                            // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
+                            String token = donnees.get("token").toString();
+                            Token.definirToken(token);
+
                             startActivity(intentionRestaurant);
                         }
                     });
