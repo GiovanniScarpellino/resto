@@ -13,10 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
@@ -25,7 +21,7 @@ import canadiens.resto.modeles.Restaurant;
 
 public class FragmentDetailRestaurant extends Fragment {
 
-    private final String TAG = "Detail restaurant : ";
+    private final String TAG = "Detail restaurant ";
 
     private TextView descriptionRestaurant;
     private int idRestaurant;
@@ -47,7 +43,8 @@ public class FragmentDetailRestaurant extends Fragment {
 
         descriptionRestaurant = view.findViewById(R.id.detail_restaurant);
         idRestaurant = getArguments().getInt("idRestaurant");
-        JSONObject jsonDonnees = new JSONObject();
+        System.out.println(idRestaurant);
+        final JSONObject jsonDonnees = new JSONObject();
         try {
             jsonDonnees.put("idRestaurant", idRestaurant);
         } catch (JSONException e) {
@@ -57,19 +54,20 @@ public class FragmentDetailRestaurant extends Fragment {
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DETAILS_RESTAURANT, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
+                System.out.println(jsonDonnees);
                 Log.e(TAG, "erreur lors de la requète vers l'API !");
             }
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                JSONArray tableauRestaurant = donnees.getJSONArray("restaurants");
-                JSONObject restaurantJSON = tableauRestaurant.getJSONObject(0);
+                System.out.println(donnees);
+                JSONObject tableauRestaurant = donnees.getJSONObject("details");
                 Restaurant restaurant = new Restaurant(
-                        restaurantJSON.getString("nom"),
-                        restaurantJSON.getString("adresse"),
-                        restaurantJSON.getString("telephone"),
-                        restaurantJSON.getString("mail"),
-                        restaurantJSON.getString("description")
+                        tableauRestaurant.getString("nom"),
+                        tableauRestaurant.getString("adresse"),
+                        tableauRestaurant.getString("telephone"),
+                        tableauRestaurant.getString("mail"),
+                        tableauRestaurant.getString("description")
                 );
                 String nom = restaurant.getNom();
                 String adresse = restaurant.getAdresse();
@@ -78,7 +76,7 @@ public class FragmentDetailRestaurant extends Fragment {
                 String description = restaurant.getDescription();
 
                 descriptionRestaurant.setText(
-                        "Nom :" + nom + "\n Adresse : " + adresse + "\n Telephone : " + telephone + "\n Mail : " + mail + "\n Description : " +description
+                        "Nom : " + nom + "\nAdresse : " + adresse + "\nTelephone : " + telephone + "\nMail : " + mail + "\nDescription : " +description
                 );
             }
         });
