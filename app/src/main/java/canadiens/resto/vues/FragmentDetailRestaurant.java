@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +23,7 @@ public class FragmentDetailRestaurant extends Fragment {
 
     private final String TAG = "Detail restaurant ";
 
+    private Button boutonReserver;
     private TextView descriptionRestaurant;
     private int idRestaurant;
 
@@ -41,6 +42,13 @@ public class FragmentDetailRestaurant extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        boutonReserver = view.findViewById(R.id.bouton_reserver);
+        boutonReserver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO : redirection vers le page pour réserver
+            }
+        });
         descriptionRestaurant = view.findViewById(R.id.detail_restaurant);
         idRestaurant = getArguments().getInt("idRestaurant");
         System.out.println(idRestaurant);
