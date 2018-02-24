@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,6 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
     private static final String ARG_PARAM2 = "param2";
     private final int CODE_REQUETE = 666;
 
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     private final String TAG = "GoogleMap : ";
@@ -77,32 +75,15 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
     private SharedPreferences preferencePartagees;
 
+    private List<Pair<Restaurant, Marker>> restaurantsMarqueursAffiches; //ID du restaurant, Instance du marqueur
+
     public FragmentGoogleMap() {
-
-    }
-
-    /**
-     * Méthode pour créer une nouvelle instance de GoogleMap avec des paramètres
-     * @param param1
-     * @param param2
-     * @return
-     */
-    public static FragmentGoogleMap newInstance(String param1, String param2) {
-        FragmentGoogleMap fragment = new FragmentGoogleMap();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        restaurantsMarqueursAffiches = new ArrayList<>();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         serviceLocalisationClient = LocationServices.getFusedLocationProviderClient(getContext());
         requeteAPI = new RequeteAPI();
         preferencePartagees = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -337,14 +318,17 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      * Affiche tout les restaurants contenu dans la liste sur la Google Map
      * @param listeRestaurant
      */
-    private void afficherPinRestaurant(List<Restaurant> listeRestaurant) {
-        effacerToutLesMarqueurs();
+    private void ajouterPinRestaurant(List<Restaurant> listeRestaurant) {
         for(Restaurant restaurant : listeRestaurant) {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
             markerOptions.title(restaurant.getNom());
             markerOptions.snippet(restaurant.getIdRestaurant() + "/" + restaurant.getDescription());
-            googleMapCourante.addMarker(markerOptions);
+            //On ajoute ce marqueur dans la liste des marqueurs affiches et sur la Google Map
+            restaurantsMarqueursAffiches.add(new Pair<Restaurant, Marker>(
+                    restaurant,
+                    googleMapCourante.addMarker(markerOptions)
+            ));
         }
     }
 
@@ -378,7 +362,10 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                List<Restaurant> listeRestaurant = new ArrayList<>();
+                //Tableaux des restaurants
+                List<Restaurant> nouveauxRestaurants = new ArrayList<>();
+                List<Restaurant> autresRestaurants = new ArrayList<>();
+                //On lit le tableau JSON des restaurants recus
                 JSONArray tableauRestaurant = donnees.getJSONArray("restaurants");
                 for(int i = 0; i < tableauRestaurant.length(); i++) {
                     JSONObject restaurantCourant = tableauRestaurant.getJSONObject(i);
@@ -388,18 +375,61 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                     double latitude = restaurantCourant.getDouble("latitude");
                     String description = restaurantCourant.getString("description");
                     Restaurant restaurant = new Restaurant(idRestaurant, nom, longitude, latitude, description);
-                    listeRestaurant.add(restaurant);
+                    //On regarde si ce restaurant existe deja sur la carte
+                    //Sinon on l'ajoute dans la liste des autres restaurants et on regarde si il a bougé depuis sa dernière position recue
+                    if(!restaurantDejaSurGoogleMap(restaurant)){
+                        nouveauxRestaurants.add(restaurant);
+                    }
+                    else{
+                        //On regarde si le restaurant a bouge et si c'est le cas on déplace le marqueur
+                        LatLng nouvelleLatitudeLongitude = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                        Marker marqueurRestaurantActuel = recupererMarqueurAvecIdRestaurant(restaurant.getIdRestaurant());
+                        if(!nouvelleLatitudeLongitude.equals(marqueurRestaurantActuel.getPosition())){
+                            marqueurRestaurantActuel.setPosition(nouvelleLatitudeLongitude);
+                        }
+                        autresRestaurants.add(restaurant);
+                    }
                 }
-                afficherPinRestaurant(listeRestaurant);
+                //On supprime les restaurants qui sont en dehors du rayon
+                int i = 0;
+                while(i < restaurantsMarqueursAffiches.size()){
+                    //On récupère le restaurantMarqueur actuellement teste
+                    Pair<Restaurant, Marker> restaurantMarqueurActuel = restaurantsMarqueursAffiches.get(i);
+                    //On regarde si ce restaurantMarqueur est encore dans le rayon
+                    boolean restaurantToujoursDansRayon = false;
+                    for(Restaurant restaurant : autresRestaurants){
+                        if(restaurant.getIdRestaurant().equals(restaurantMarqueurActuel.first.getIdRestaurant())){
+                            restaurantToujoursDansRayon = true;
+                            break;
+                        }
+                    }
+                    //Si le restaurant est toujours dans le rayon on continue de parcourir la boucle
+                    //Sinon on le supprime de la google map et de la liste
+                    if(restaurantToujoursDansRayon){
+                        i++;
+                    }
+                    else{
+                        restaurantMarqueurActuel.second.remove(); //On remove le marqueur de la google map
+                        restaurantsMarqueursAffiches.remove(i); //On supprime le marqueur de la liste
+                    }
+                }
+                //On affiche les nouveaux restaurants
+                ajouterPinRestaurant(nouveauxRestaurants);
             }
         });
     }
 
-    /**
-     * Méthode qui efface tout les marqueurs de la Google Map
-     */
-    private void effacerToutLesMarqueurs() {
-        googleMapCourante.clear();
+    private boolean restaurantDejaSurGoogleMap(Restaurant restaurant){
+        return recupererMarqueurAvecIdRestaurant(restaurant.getIdRestaurant()) != null;
+    }
+
+    private Marker recupererMarqueurAvecIdRestaurant(String idRestaurant){
+        for(Pair<Restaurant, Marker> restaurantMarqueur : restaurantsMarqueursAffiches){
+            if(restaurantMarqueur.first.getIdRestaurant().equals(idRestaurant)){
+                return restaurantMarqueur.second;
+            }
+        }
+        return null;
     }
 
     public interface OnFragmentInteractionListener {
