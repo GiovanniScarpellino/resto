@@ -78,21 +78,15 @@ public class VueConnexion extends AppCompatActivity {
                         }
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
+                            Token.definirToken(getApplicationContext(), donnees.get("token").toString());
                             switch (donnees.get("type").toString()){
                                 case "client":
-                                    Intent intentionClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
-                                    startActivity(intentionClient);
+                                    startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
                                     break;
                                 case "restaurant":
-                                    Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
-                                    intentionRestaurant.putExtra("token", donnees.get("token").toString());
-                                    startActivity(intentionRestaurant);
+                                    startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
                                     break;
                             }
-
-                            // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
-                            String token = donnees.get("token").toString();
-                            Token.definirToken(getApplicationContext(),token);
                         }
                     });
                 }

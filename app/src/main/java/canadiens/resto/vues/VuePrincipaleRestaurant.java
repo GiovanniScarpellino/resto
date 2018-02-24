@@ -26,7 +26,6 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private NavigationView navigationView;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,6 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        token = getIntent().getStringExtra("token");
-        System.out.println(token);
 
         changerDeFragment(TypeFragment.ReservationsRestaurant);
     }
@@ -113,12 +109,8 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
     private void changerDeFragment(TypeFragment fragment) {
         switch (fragment) {
             case ReservationsRestaurant:
-                FragmentReservationsRestaurant fragmentReservationsRestaurant = new FragmentReservationsRestaurant();
-                Bundle argumentAPasser = new Bundle();
-                argumentAPasser.putString("token", token);
-                fragmentReservationsRestaurant.setArguments(argumentAPasser);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, fragmentReservationsRestaurant)
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant())
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
                 break;
