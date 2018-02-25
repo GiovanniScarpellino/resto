@@ -5,13 +5,88 @@
     android:orientation="vertical"
     tools:context="canadiens.resto.vues.FragmentDetailRestaurant">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/detail_restaurant"
+        android:id="@+id/texte_nom_restaurant"
         android:layout_width="match_parent"
-        android:layout_height="296dp"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Nom restaurant"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/texte_adresse_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Adresse"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/texte_telephone_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Telephone"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/texte_mail_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Mail"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/texte_description_restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="Description"
+        android:textSize="14sp" />
+
+
+    <View
+        android:id="@+id/SplitLine_hor1"
+        android:layout_width="match_parent"
+        android:layout_height= "2dp"
+        android:background="#000000" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Réservation"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/date_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="false"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/heure_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="false"
+        android:ems="10"
+        android:hint="Heure"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/nombre_personne_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre de personne"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/bouton_reserver"

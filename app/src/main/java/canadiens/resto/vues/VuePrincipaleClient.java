@@ -26,7 +26,7 @@ import canadiens.resto.assistants.Token;
 public class VuePrincipaleClient extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener {
 
-    private NavigationView navigationView;
+    public static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,12 @@ public class VuePrincipaleClient extends AppCompatActivity
             case R.id.nav_google_map:
                 changerDeFragment(TypeFragment.GoogleMap);
                 break;
+            case R.id.nav_reservations_client:
+                changerDeFragment(TypeFragment.ReservationsClient);
+                break;
+            case R.id.nav_modification_profil_client:
+                changerDeFragment(TypeFragment.ModificationClient);
+                break;
             case R.id.nav_deconnexion_client:
                 try {
                     deconnecterClient();
@@ -110,19 +116,19 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
+                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap())
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
+                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient())
                         .commit();
-                navigationView.setCheckedItem(R.id.nav_modification_profile_client);
+                navigationView.setCheckedItem(R.id.nav_modification_profil_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client,new FragmentGoogleMap())
+                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient())
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;

@@ -88,7 +88,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
             case R.id.nav_reservations_restaurant:
                 changerDeFragment(TypeFragment.ReservationsRestaurant);
                 break;
-            case R.id.nav_modification_profile_restaurant:
+            case R.id.nav_modification_profil_restaurant:
                 changerDeFragment(TypeFragment.ModificationRestaurant);
                 break;
             case R.id.nav_deconnexion_restaurant:
@@ -118,7 +118,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant())
                         .commit();
-                navigationView.setCheckedItem(R.id.nav_modification_profile_restaurant);
+                navigationView.setCheckedItem(R.id.nav_modification_profil_restaurant);
                 break;
         }
     }
