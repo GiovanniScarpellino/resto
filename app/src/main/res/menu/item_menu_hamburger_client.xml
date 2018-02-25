@@ -13,7 +13,7 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Voir vos réservations" />
         <item
-            android:id="@+id/nav_modification_profile_client"
+            android:id="@+id/nav_modification_profil_client"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Modification du profil" />
         <item
