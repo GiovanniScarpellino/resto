@@ -91,7 +91,11 @@ public class FragmentReservationsClient extends Fragment {
 
                         HashMap<String, String> reservationHashMap = new HashMap<>();
 
-                        reservationHashMap.put("date", reservationActuelle.getString("date"));
+                        String annee = reservationActuelle.getString("date").split("-")[0];
+                        String mois = reservationActuelle.getString("date").split("-")[1];
+                        String jour = reservationActuelle.getString("date").split("-")[2];
+
+                        reservationHashMap.put("date", jour+"-"+mois+"-"+annee);
                         reservationHashMap.put("heure", reservationActuelle.getString("heure"));
                         reservationHashMap.put("nombrePersonnes", reservationActuelle.getString("nombrePersonnes") + " personnes");
                         reservationHashMap.put("nomRestaurant", reservationActuelle.getString("nomRestaurant"));
