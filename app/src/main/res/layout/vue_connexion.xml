@@ -1,66 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="canadiens.resto.vues.VueConnexion"
-    android:orientation="vertical">
+    android:background="#e6e6e6">
 
-    <TextView
-        android:id="@+id/txt_identifiant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adresse mail ou numéro de téléphone :"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="36dp" />
+    <ImageView
+        android:id="@+id/logo_gogoresto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_logo_gogoresto" />
 
     <EditText
         android:id="@+id/champ_identifiant"
-        android:layout_width="wrap_content"
+        android:layout_width="324dp"
         android:layout_height="wrap_content"
-        android:hint="Votre identifiant ou nom de restaurant"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/style_edit_text"
+        android:hint="Numéro de téléphone ou email"
         android:inputType="text"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <TextView
-        android:id="@+id/txt_mdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mot De Passe :" />
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_gogoresto"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_mdp"
-        android:layout_width="wrap_content"
+        android:layout_width="324dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/style_edit_text"
         android:hint="Votre mot de passe"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="29dp" />
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_identifiant"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <Button
         android:id="@+id/action_connexion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Connexion" />
+        android:layout_width="324dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/style_bouton"
+        android:text="Connexion"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_mdp" />
+
+    <View
+        android:id="@+id/SplitLine_hor1"
+        android:layout_width="350dp"
+        android:layout_height="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="#afafaf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/action_connexion" />
 
     <TextView
-        android:id="@+id/txt_inscription"
-        android:layout_width="match_parent"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="S'inscrire" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:text="Toujours pas inscrit ?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
     <Button
         android:id="@+id/action_inscription_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Client" />
+        android:layout_width="324dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/style_bouton"
+        android:text="Inscription Client"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/action_inscription_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="324dp"
         android:layout_height="wrap_content"
-        android:text="Restaurateur" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_bouton"
+        android:text="Inscription Restaurateur"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/action_inscription_client"
+        app:layout_constraintVertical_bias="0.0" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
