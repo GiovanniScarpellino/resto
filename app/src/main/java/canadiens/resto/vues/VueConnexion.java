@@ -51,6 +51,7 @@ public class VueConnexion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentionVersInscriptionClient = new Intent(VueConnexion.this, VueInscriptionClient.class);
+                intentionVersInscriptionClient.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentionVersInscriptionClient);
             }
         });
@@ -59,6 +60,7 @@ public class VueConnexion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentionVersInscriptionRestaurant = new Intent(VueConnexion.this, VueInscriptionRestaurant.class);
+                intentionVersInscriptionRestaurant.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentionVersInscriptionRestaurant);
             }
         });

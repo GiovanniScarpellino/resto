@@ -17,10 +17,6 @@ import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
 
-/**
- * Created by nicog on 16/02/2018.
- */
-
 public class VueInscriptionClient extends AppCompatActivity {
 
     protected EditText champNom;
@@ -30,7 +26,6 @@ public class VueInscriptionClient extends AppCompatActivity {
     protected EditText champMDP;
 
     protected Button boutonValider;
-    protected Button boutonRetour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +39,6 @@ public class VueInscriptionClient extends AppCompatActivity {
         champMDP = (EditText) findViewById(R.id.champ_mdp_client);
 
         boutonValider = (Button) findViewById(R.id.bouton_valider_client);
-        boutonRetour = (Button) findViewById(R.id.bouton_retour_client);
 
         ajouterEcouteur();
 
@@ -83,12 +77,11 @@ public class VueInscriptionClient extends AppCompatActivity {
                 catch(JSONException e) { e.printStackTrace(); }
             }
         });
+    }
 
-        boutonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
     }
 }
