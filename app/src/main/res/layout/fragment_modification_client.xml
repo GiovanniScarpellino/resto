@@ -1,68 +1,140 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="canadiens.resto.vues.FragmentModificationClient">
 
-    <EditText
-        android:id="@+id/champ_nom_client_modif"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Modification du profil"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/SplitLine_hor1"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="#afafaf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+    <EditText
+        android:background="@drawable/style_champs_texte"
+        android:id="@+id/champ_nom_client_modif"
+        android:layout_width="@dimen/champs_text_largeur"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Nom"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
     <EditText
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_prenom_client_modif"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Prenom"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_nom_client_modif" />
 
     <EditText
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_tel_client_modif"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Telephone"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_prenom_client_modif" />
 
     <EditText
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mail_client_modif"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Mail"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_mdp_client_modif" />
 
     <EditText
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mdp_client_modif"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Mote de passe"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_tel_client_modif" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/bouton_valider_client_modif"
+        android:layout_width="@dimen/bouton_largeur"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_bouton"
+        android:text="Valider"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_mail_client_modif" />
 
-        <Button
-            android:id="@+id/bouton_valider_client_modif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Valider" />
-
-        <Button
-            android:id="@+id/bouton_retour_client_modif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Retour" />
-    </LinearLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

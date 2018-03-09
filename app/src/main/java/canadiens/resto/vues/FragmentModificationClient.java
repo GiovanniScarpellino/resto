@@ -29,7 +29,6 @@ public class FragmentModificationClient extends Fragment {
     protected EditText champMDP;
 
     protected Button boutonValider;
-    protected Button boutonRetour;
 
     public FragmentModificationClient() {
         // Required empty public constructor
@@ -51,7 +50,6 @@ public class FragmentModificationClient extends Fragment {
         champMDP = (EditText) view.findViewById(R.id.champ_mdp_client_modif);
 
         boutonValider = (Button) view.findViewById(R.id.bouton_valider_client_modif);
-        boutonRetour = (Button) view.findViewById(R.id.bouton_retour_client_modif);
 
         boutonValider.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +59,6 @@ public class FragmentModificationClient extends Fragment {
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
-            }
-        });
-
-        boutonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO : redirection
             }
         });
     }

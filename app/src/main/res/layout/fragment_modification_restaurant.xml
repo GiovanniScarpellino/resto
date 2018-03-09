@@ -1,126 +1,158 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="canadiens.resto.vues.FragmentModificationRestaurant">
 
     <TextView
-        android:id="@+id/txt_nom_restaurant"
-        android:layout_width="match_parent"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Nom du restaurant"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Modification du profil"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/SplitLine_hor1"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="#afafaf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/champ_nom_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/txt_description_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Description du restaurant"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:hint="Nom du restaurant"
+        android:inputType="textPersonName"
+        android:padding="@dimen/champs_texte_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_description_restaurant"
-        android:layout_width="match_parent"
+        android:hint="Description du restaurant"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/txt_adresse_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Adresse du restaurant"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_nom_restaurant"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_adresse_restaurant"
-        android:layout_width="match_parent"
+        android:hint="Adresse du restaurant"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/txt_telephone_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Numéro de téléphone du restaurant"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_description_restaurant"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_telephone_restaurant"
-        android:layout_width="match_parent"
+        android:hint="Téléphone du restaurant"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="phone" />
-
-    <TextView
-        android:id="@+id/txt_mail_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Adresse mail du restaurant"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_adresse_restaurant"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_mail_restaurant"
-        android:layout_width="match_parent"
+        android:hint="Mail du restaurant"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="textWebEmailAddress" />
-
-    <TextView
-        android:id="@+id/txt_mot_de_passe_restaurant3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Mot de passe du compte"
-        android:textAlignment="center"
-        android:textSize="17sp" />
+        android:inputType="textWebEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_telephone_restaurant"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_mot_de_passe_restaurant"
-        android:layout_width="match_parent"
+        android:hint="Mot de passe du restaurant"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_mail_restaurant"
+        android:padding="@dimen/champs_texte_padding"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/couleurBoutonActive"/>
 
     <Button
+        android:background="@drawable/style_bouton"
         android:id="@+id/action_valider_modifications_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/bouton_largeur"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Valider" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Valider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champ_mot_de_passe_restaurant"
+        android:textColor="@color/colorPrimary"/>
 
-</LinearLayout>
 
-</ScrollView>
+</android.support.constraint.ConstraintLayout>
