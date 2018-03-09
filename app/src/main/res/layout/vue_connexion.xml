@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="canadiens.resto.vues.VueConnexion"
-    android:background="#e6e6e6">
+    android:background="@color/couleurFond">
 
     <ImageView
         android:id="@+id/logo_gogoresto"
@@ -22,29 +22,29 @@
 
     <EditText
         android:id="@+id/champ_identifiant"
-        android:layout_width="324dp"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:hint="Numéro de téléphone ou email"
         android:inputType="text"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_gogoresto"
+        android:padding="10dp"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
         android:id="@+id/champ_mdp"
-        android:layout_width="324dp"
+        android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:hint="Votre mot de passe"
         android:inputType="textPassword"
         android:padding="10dp"
@@ -56,7 +56,7 @@
 
     <Button
         android:id="@+id/action_connexion"
-        android:layout_width="324dp"
+        android:layout_width="@dimen/bouton_largeur"
         android:layout_height="47dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -94,7 +94,7 @@
 
     <Button
         android:id="@+id/action_inscription_client"
-        android:layout_width="324dp"
+        android:layout_width="@dimen/bouton_largeur"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -108,15 +108,15 @@
 
     <Button
         android:id="@+id/action_inscription_restaurant"
-        android:layout_width="324dp"
+        android:layout_width="@dimen/bouton_largeur"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/style_bouton"
-        android:text="Inscription Restaurateur"
         android:textColor="@color/colorPrimary"
+        android:text="Inscription Restaurateur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

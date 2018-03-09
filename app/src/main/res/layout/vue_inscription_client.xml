@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6">
+    android:background="@color/couleurFond">
 
     <ImageView
         android:id="@+id/logo_gogoresto"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Nom"
         android:inputType="textPersonName"
@@ -44,7 +44,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Prenom"
         android:inputType="textPersonName"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Telephone"
         android:inputType="number"
@@ -80,7 +80,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Mail"
         android:inputType="textPersonName"
@@ -98,7 +98,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Mote de passe"
         android:inputType="textPassword"

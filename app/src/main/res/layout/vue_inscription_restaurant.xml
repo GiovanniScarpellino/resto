@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#e6e6e6">
+    android:background="@color/couleurFond">
 
     <ImageView
         android:id="@+id/logo_gogoresto"
@@ -21,7 +21,7 @@
         app:srcCompat="@mipmap/ic_logo_gogoresto" />
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_nom"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_adresse"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_telephone"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mail"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_description"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         android:textColorHint="@color/couleurBoutonActive"/>
 
     <EditText
-        android:background="@drawable/style_edit_text"
+        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mdp"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
