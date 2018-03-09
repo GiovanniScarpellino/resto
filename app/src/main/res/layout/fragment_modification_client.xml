@@ -113,7 +113,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="Mote de passe"
+        android:hint="Mot de passe"
         android:inputType="textPersonName"
         android:padding="@dimen/champs_texte_padding"
         android:textColor="@color/colorPrimary"
