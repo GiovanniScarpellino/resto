@@ -12,4 +12,7 @@ public class TypeRequeteAPI {
     public static final String MODIFICATION_RESTAURANT = "ModificationRestaurant";
     public static final String RESERVATIONS_CLIENT = "ReservationsClient";
     public static final String RESERVATIONS_RESTAURANT = "ReservationsRestaurant";
+    public static final String RECUPERATION_CODE_FIDELITE = "RecuperationCodeFidelite";
+    public static final String VERIFICATION_CODE_FIDELITE = "VerificationCodeFidelite";
+    public static final String MODIFICATION_POINTS_FIDELITE = "ModificationPointsFidelite";
 }

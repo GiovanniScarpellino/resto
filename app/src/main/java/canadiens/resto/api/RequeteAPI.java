@@ -81,7 +81,7 @@ public class RequeteAPI {
                 }
                 catch(IOException e){
                     e.printStackTrace();
-                    Log.e("API", "Erreur lors de la connexion et de la lecture du site");
+                    Log.e("API", "Erreur lors de la connexion et de la lecture du service web");
                 }
                 //Si il y a eu une erreur, on envoie null
                 return null;
@@ -106,10 +106,13 @@ public class RequeteAPI {
                         actionsResultatDemande.quandSucces(resultat);
                     }
                     else{
+                        Log.e("API", "Le resultat de la requete est egal a 0 (Erreur au niveau du service web)");
                         actionsResultatDemande.quandErreur();
                     }
                 }
                 catch(JSONException e){
+                    e.printStackTrace();
+                    Log.e("API", "Impossible d'interpreter le JSON recu");
                     actionsResultatDemande.quandErreur();
                 }
             }
