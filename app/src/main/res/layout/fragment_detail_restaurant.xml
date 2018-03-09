@@ -1,97 +1,174 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="canadiens.resto.vues.FragmentDetailRestaurant">
+    tools:context="canadiens.resto.vues.FragmentDetailRestaurant"
+    android:background="#e6e6e6">
 
 
     <TextView
         android:id="@+id/texte_nom_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Nom restaurant"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/texte_adresse_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Adresse"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texte_nom_restaurant"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/texte_telephone_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:text="Telephone"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texte_adresse_restaurant"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/texte_mail_restaurant"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:text="Mail"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texte_telephone_restaurant"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/texte_description_restaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_width="363dp"
+        android:layout_height="192dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Description"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/texte_mail_restaurant"
+        android:layout_marginLeft="8dp" />
 
-
-    <View
-        android:id="@+id/SplitLine_hor1"
-        android:layout_width="match_parent"
-        android:layout_height= "2dp"
-        android:background="#000000" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Réservation"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/date_reservation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:hint="Date"
-        android:inputType="date" />
-
-    <EditText
-        android:id="@+id/heure_reservation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:hint="Heure"
-        android:inputType="time" />
-
-    <EditText
-        android:id="@+id/nombre_personne_reservation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Nombre de personne"
-        android:inputType="number" />
 
     <Button
         android:id="@+id/bouton_reserver"
-        android:layout_width="match_parent"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
-        android:text="Réserver" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/style_bouton_arrondi_normal"
+        android:text="Réserver"
+        app:layout_constraintBottom_toTopOf="@+id/section_reservation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/section_reservation"
+        android:layout_width="325dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="#ffffff"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/heure_reservation"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/style_champs_texte"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:hint="Heure"
+            android:inputType="time"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/couleurBoutonActive"
+            app:layout_constraintEnd_toEndOf="@+id/section_reservation"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/section_reservation"
+            app:layout_constraintTop_toBottomOf="@+id/date_reservation" />
+
+        <EditText
+            android:id="@+id/nombre_personne_reservation"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/style_champs_texte"
+            android:ems="10"
+            android:hint="Nombre de personne"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/couleurBoutonActive"
+            app:layout_constraintEnd_toEndOf="@+id/section_reservation"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/section_reservation"
+            app:layout_constraintTop_toBottomOf="@+id/heure_reservation" />
+
+        <EditText
+            android:id="@+id/date_reservation"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/style_champs_texte"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:hint="Date"
+            android:inputType="date"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/couleurBoutonActive"
+            app:layout_constraintEnd_toEndOf="@+id/section_reservation"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/section_reservation"
+            app:layout_constraintTop_toTopOf="@+id/section_reservation" />
+
+        <Button
+            android:id="@+id/bouton_valider_reservation"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/style_bouton"
+            android:text="Valider"
+            android:textColor="@color/colorPrimary"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombre_personne_reservation" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

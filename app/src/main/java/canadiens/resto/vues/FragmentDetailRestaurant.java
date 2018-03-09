@@ -1,15 +1,23 @@
 package canadiens.resto.vues;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,6 +43,7 @@ public class FragmentDetailRestaurant extends Fragment implements
     private final String TAG = "Detail restaurant ";
 
     private Button boutonReserver;
+    private Button boutonValiderReservation;
 
     private TextView nomRestaurant;
     private TextView adresse;
@@ -45,6 +54,8 @@ public class FragmentDetailRestaurant extends Fragment implements
     private EditText champsHeure;
     private EditText champsDate;
     private EditText champsNombresPersonnes;
+
+    private ConstraintLayout sectionReservation;
 
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
@@ -74,6 +85,8 @@ public class FragmentDetailRestaurant extends Fragment implements
         mail = view.findViewById(R.id.texte_mail_restaurant);
         description = view.findViewById(R.id.texte_description_restaurant);
 
+        sectionReservation = view.findViewById(R.id.section_reservation);
+
         datePickerDialog = new DatePickerDialog(getContext(), this, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         timePickerDialog = new TimePickerDialog(getContext(), this, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
 
@@ -96,7 +109,56 @@ public class FragmentDetailRestaurant extends Fragment implements
         });
 
         boutonReserver = view.findViewById(R.id.bouton_reserver);
+        boutonValiderReservation = view.findViewById(R.id.bouton_valider_reservation);
+
         boutonReserver.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(View view) {
+
+                /* Ouverture du panneau pour réserver */
+
+                if(sectionReservation.getVisibility() == View.INVISIBLE){
+                    //Animation
+                    sectionReservation.setVisibility(View.VISIBLE);
+                    int valeurHauteur = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());
+                    ValueAnimator anim = ValueAnimator.ofInt(sectionReservation.getMeasuredHeight(), valeurHauteur);
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animationValeur) {
+                            ViewGroup.LayoutParams sectionReservationParametres = sectionReservation.getLayoutParams();
+                            sectionReservationParametres.height = (Integer) animationValeur.getAnimatedValue();;
+                            sectionReservation.setLayoutParams(sectionReservationParametres);
+                        }
+                    });
+                    anim.setDuration(500);
+                    anim.start();
+                }else{
+                    //Animation
+                    int valeurHauteur = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
+                    ValueAnimator anim = ValueAnimator.ofInt(sectionReservation.getMeasuredHeight(), valeurHauteur);
+                    anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animationValeur) {
+                            ViewGroup.LayoutParams sectionReservationParametres = sectionReservation.getLayoutParams();
+                            sectionReservationParametres.height = (Integer) animationValeur.getAnimatedValue();;
+                            sectionReservation.setLayoutParams(sectionReservationParametres);
+                        }
+                    });
+                    //Quand l'animation est finie
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            sectionReservation.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    anim.setDuration(500);
+                    anim.start();
+                }
+            }
+        });
+
+        boutonValiderReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /* --------------- Réservation dans un restaurant ---------------*/
@@ -113,7 +175,7 @@ public class FragmentDetailRestaurant extends Fragment implements
                     jsonDonnees.put("token", Token.recupererToken(getContext()));
 
                     System.out.println(jsonDonnees);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
