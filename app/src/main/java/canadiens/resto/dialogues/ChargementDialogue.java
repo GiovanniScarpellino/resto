@@ -24,6 +24,7 @@ public class ChargementDialogue extends Dialog {
     public ChargementDialogue(@NonNull Context context) {
         super(context);
         texte = "Chargement...";
+        texteDialogue.setText(texte);
     }
 
     public void setTexte(String texte) {
