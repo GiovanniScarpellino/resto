@@ -1,4 +1,4 @@
-package canadiens.resto.dialogue;
+package canadiens.resto.dialogues;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,6 +17,6 @@ public class ChargementDialogue extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCancelable(false);
-        setContentView(R.layout.chargement_dialogue);
+        setContentView(R.layout.dialogue_chargement);
     }
 }

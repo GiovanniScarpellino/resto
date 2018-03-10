@@ -35,7 +35,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogue.RecupererNombreDialogue;
+import canadiens.resto.dialogues.RecupererNombreDialogue;
 
 public class FragmentDetailRestaurant extends Fragment implements
         DatePickerDialog.OnDateSetListener,

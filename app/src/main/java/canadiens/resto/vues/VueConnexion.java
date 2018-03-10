@@ -16,7 +16,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogue.ChargementDialogue;
+import canadiens.resto.dialogues.ChargementDialogue;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;

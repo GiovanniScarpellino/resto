@@ -1,10 +1,9 @@
-package canadiens.resto.dialogue;
+package canadiens.resto.dialogues;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.NumberPicker;
