@@ -16,6 +16,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogue.ChargementDialogue;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;
@@ -24,6 +25,8 @@ public class VueConnexion extends AppCompatActivity {
     protected Button btnConnexion;
     protected Button btnClient;
     protected Button btnRestaurant;
+
+    private ChargementDialogue chargementDialogue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +41,15 @@ public class VueConnexion extends AppCompatActivity {
 
         ajouterEcouteur();
 
-        Intent intentionVersHamburgerMenu = new Intent(VueConnexion.this, VuePrincipaleClient.class);
-        //startActivity(intentionVersHamburgerMenu);
+        new Intent(VueConnexion.this, VuePrincipaleClient.class);
+
+        chargementDialogue = new ChargementDialogue(this);
     }
 
     /**
      * Listeners des boutons
      */
-    private void ajouterEcouteur(){
+    private void ajouterEcouteur() {
 
         btnClient.setOnClickListener(new View.OnClickListener() { // fait la fonction modifier dans le boutton valider
             @Override
@@ -65,23 +69,26 @@ public class VueConnexion extends AppCompatActivity {
             }
         });
 
-        btnConnexion.setOnClickListener(new View.OnClickListener(){
+        btnConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
+                try {
                     JSONObject parametres = new JSONObject();
                     parametres.put("login", champsIdentifiant.getText());
                     parametres.put("motDePasse", champsMDP.getText());
 
+                    chargementDialogue.show();
                     RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, parametres, new ActionsResultatAPI() {
                         @Override
                         public void quandErreur() {
+                            chargementDialogue.dismiss();
                             Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
                         }
+
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
                             Token.definirToken(getApplicationContext(), donnees.get("token").toString());
-                            switch (donnees.get("type").toString()){
+                            switch (donnees.get("type").toString()) {
                                 case "client":
                                     startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
                                     break;
@@ -89,10 +96,12 @@ public class VueConnexion extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
                                     break;
                             }
+                            chargementDialogue.dismiss();
                         }
                     });
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                catch(JSONException e) { e.printStackTrace(); }
             }
         });
     }
