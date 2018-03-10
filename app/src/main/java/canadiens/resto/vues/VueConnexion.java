@@ -44,6 +44,7 @@ public class VueConnexion extends AppCompatActivity {
         new Intent(VueConnexion.this, VuePrincipaleClient.class);
 
         chargementDialogue = new ChargementDialogue(this);
+        chargementDialogue.show();
     }
 
     /**
