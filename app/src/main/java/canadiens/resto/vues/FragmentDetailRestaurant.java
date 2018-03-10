@@ -17,10 +17,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -35,10 +35,12 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogue.NumberPickerDialog;
 
 public class FragmentDetailRestaurant extends Fragment implements
         DatePickerDialog.OnDateSetListener,
-        TimePickerDialog.OnTimeSetListener {
+        TimePickerDialog.OnTimeSetListener,
+        NumberPicker.OnValueChangeListener{
 
     private final String TAG = "Detail restaurant ";
 
@@ -105,6 +107,15 @@ public class FragmentDetailRestaurant extends Fragment implements
             @Override
             public void onClick(View view) {
                 datePickerDialog.show();
+            }
+        });
+
+        champsNombresPersonnes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NumberPickerDialog newFragment = new NumberPickerDialog();
+                newFragment.setValueChangeListener(FragmentDetailRestaurant.this);
+                newFragment.show(getActivity().getFragmentManager(), "Test");
             }
         });
 
@@ -238,5 +249,11 @@ public class FragmentDetailRestaurant extends Fragment implements
     @Override
     public void onTimeSet(TimePicker timePicker, int heure, int minute) {
         champsHeure.setText(String.format("%02d", heure) + ":" + String.format("%02d", minute));
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+        champsNombresPersonnes.setText(numberPicker.getValue()+"");
     }
 }
