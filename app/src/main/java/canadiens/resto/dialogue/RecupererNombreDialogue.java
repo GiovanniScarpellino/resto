@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.widget.NumberPicker;
 
 @SuppressLint("ValidFragment")
-public class NumberPickerDialog extends DialogFragment {
+public class RecupererNombreDialogue extends DialogFragment {
 
     private NumberPicker.OnValueChangeListener valueChangeListener;
 
