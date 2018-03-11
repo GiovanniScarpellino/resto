@@ -21,6 +21,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogues.ChargementDialogue;
 
 public class VuePrincipaleRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -129,13 +130,18 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         JSONObject parametres = new JSONObject();
         parametres.put("token", Token.recupererToken(this));
 
+        final ChargementDialogue dialogueChargement = new ChargementDialogue(this, "Déconnexion...");
+        dialogueChargement.show();
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
+                dialogueChargement.dismiss();
                 Toast.makeText(VuePrincipaleRestaurant.this, "Erreur lors de la déconnexion, veuillez réessayer...", Toast.LENGTH_LONG).show();
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
+                dialogueChargement.dismiss();
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleRestaurant.this, VueConnexion.class);
                 startActivity(intentionNaviguerVueConnexion);
             }
