@@ -18,6 +18,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogues.ChargementDialogue;
 
 public class FragmentModificationRestaurant extends Fragment {
     private EditText champNom;
@@ -72,13 +73,18 @@ public class FragmentModificationRestaurant extends Fragment {
         parametres.put("motDePasse", champMotDePasse.getText().toString());
         parametres.put("token", Token.recupererToken(getContext()));
 
+        final ChargementDialogue dialogueChargement = new ChargementDialogue(getContext(), "Modification du compte...");
+        dialogueChargement.show();
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.MODIFICATION_RESTAURANT, parametres, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
+                dialogueChargement.dismiss();
                 Toast.makeText(getContext(),"Impossible de modifier le restaurant", Toast.LENGTH_LONG).show();
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
+                dialogueChargement.dismiss();
                 Toast.makeText(getContext(),"Restaurant modifié !", Toast.LENGTH_LONG).show();
             }
         });
