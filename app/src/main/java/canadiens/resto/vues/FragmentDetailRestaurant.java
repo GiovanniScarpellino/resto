@@ -35,7 +35,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.RecupererNombreDialogue;
+import canadiens.resto.dialogues.DialogueRecupererNombre;
 
 public class FragmentDetailRestaurant extends Fragment implements
         DatePickerDialog.OnDateSetListener,
@@ -113,7 +113,7 @@ public class FragmentDetailRestaurant extends Fragment implements
         champsNombresPersonnes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecupererNombreDialogue newFragment = new RecupererNombreDialogue();
+                DialogueRecupererNombre newFragment = new DialogueRecupererNombre();
                 newFragment.setValueChangeListener(FragmentDetailRestaurant.this);
                 newFragment.show(getActivity().getFragmentManager(), "Test");
             }
