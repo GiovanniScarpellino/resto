@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -47,11 +48,13 @@ public class VuePrincipaleClient extends AppCompatActivity
         changerDeFragment(TypeFragment.GoogleMap);
     }
 
+    /**
+     * Lorsque l'utilisateur presse "retour" sur son téléphone, le dernier fragment chargé revient donc au premier plan
+     */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -116,19 +119,19 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap())
+                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap()).addToBackStack("my_fragment")
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient())
+                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient()).addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient())
+                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient()).addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
