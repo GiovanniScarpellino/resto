@@ -13,10 +13,13 @@ import android.preference.PreferenceManager;
 public final class Token {
 
     private static String token;
+    private String type;
     public final static String TOKEN_UTILISATEUR = "token utilisateur";
+    public final static String TYPE_UTILISATEUR = "type utilisateur";
 
     private Token() { // private constructor
         token = "";
+        type = "";
     }
 
     public static void definirToken(Context contexte, String valeurToken) {
@@ -30,5 +33,20 @@ public final class Token {
         // Récupération depuis les préférences partagées
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
         return preferences.getString(TOKEN_UTILISATEUR, "erreur");
+    }
+
+
+
+    public static void definirType(Context contexte, String valeurType) {
+        // Ajout dans les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(TYPE_UTILISATEUR, valeurType);
+        editor.commit();
+    }
+    public static String recupererType(Context contexte) {
+        // Récupération depuis les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        return preferences.getString(TYPE_UTILISATEUR, "erreur");
     }
 }

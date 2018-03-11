@@ -76,6 +76,7 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                             // Récupère le token de l'utilisateur et le place dans la classe statique pour pouvoir le récupérer n'importe quand
                             String token = donnees.get("token").toString();
                             Token.definirToken(getApplicationContext(),token);
+                            Token.definirType(getApplicationContext(), "restaurant");
 
                             startActivity(intentionRestaurant);
                         }

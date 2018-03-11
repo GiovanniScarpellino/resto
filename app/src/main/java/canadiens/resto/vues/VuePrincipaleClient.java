@@ -160,6 +160,7 @@ public class VuePrincipaleClient extends AppCompatActivity
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
+                Token.definirToken(getApplicationContext(), "erreur");
                 dialogueChargement.dismiss();
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleClient.this, VueConnexion.class);
                 startActivity(intentionNaviguerVueConnexion);

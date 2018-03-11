@@ -126,6 +126,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
+                Token.definirToken(getApplicationContext(), "erreur");
                 dialogueChargement.dismiss();
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleRestaurant.this, VueConnexion.class);
                 startActivity(intentionNaviguerVueConnexion);

@@ -30,7 +30,18 @@ public class VueConnexion extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (Token.recupererToken(this).equals("erreur") == false){
+            if (Token.recupererType(this).equals("client")) {
+                startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
+            }
+            if (Token.recupererType(this).equals("restaurant")) {
+                startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
+            }
+        }
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.vue_connexion);
 
         champsIdentifiant = (EditText) findViewById(R.id.champ_identifiant);
@@ -88,6 +99,7 @@ public class VueConnexion extends AppCompatActivity {
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
                             Token.definirToken(getApplicationContext(), donnees.get("token").toString());
+                            Token.definirType(getApplicationContext(), donnees.get("type").toString());
                             switch (donnees.get("type").toString()) {
                                 case "client":
                                     Intent intentionVuePrincipaleClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
