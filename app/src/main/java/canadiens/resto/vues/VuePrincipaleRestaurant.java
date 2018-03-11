@@ -46,11 +46,13 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         changerDeFragment(TypeFragment.ReservationsRestaurant);
     }
 
+    /**
+     * Lorsque l'utilisateur presse "retour" sur son téléphone, le dernier fragment chargé revient donc au premier plan
+     */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -110,13 +112,13 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         switch (fragment) {
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant())
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant()).addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
                 break;
             case ModificationRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant())
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant()).addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_restaurant);
                 break;
