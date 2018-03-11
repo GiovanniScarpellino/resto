@@ -13,27 +13,21 @@ import canadiens.resto.R;
 
 public class ChargementDialogue extends Dialog {
 
-    private String texte;
     private TextView texteDialogue;
     private View vue;
 
     public ChargementDialogue(@NonNull Context context, String texte) {
         super(context);
-        this.texte = texte;
-        vue = View.inflate(getContext(), R.layout.dialogue_chargement, null);
-        texteDialogue = vue.findViewById(R.id.text_chargement);
-    }
-
-    public ChargementDialogue(@NonNull Context context) {
-        super(context);
-        texte = "Chargement...";
         vue = View.inflate(getContext(), R.layout.dialogue_chargement, null);
         texteDialogue = vue.findViewById(R.id.text_chargement);
         texteDialogue.setText(texte);
     }
 
+    public ChargementDialogue(@NonNull Context context) {
+        this(context, "Chargement...");
+    }
+
     public void setTexte(String texte) {
-        this.texte = texte;
         texteDialogue.setText(texte);
     }
 
