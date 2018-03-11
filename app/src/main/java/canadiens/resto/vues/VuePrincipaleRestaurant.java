@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -43,6 +44,12 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TextView menuHamburgerNom = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_restaurant_nom);
+        TextView menuHamburgerMail = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_restaurant_mail);
+
+        menuHamburgerNom.setText(getIntent().getStringExtra("nom"));
+        menuHamburgerMail.setText(getIntent().getStringExtra("mail"));
 
         changerDeFragment(TypeFragment.ReservationsRestaurant);
     }

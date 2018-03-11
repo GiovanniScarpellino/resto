@@ -90,10 +90,16 @@ public class VueConnexion extends AppCompatActivity {
                             Token.definirToken(getApplicationContext(), donnees.get("token").toString());
                             switch (donnees.get("type").toString()) {
                                 case "client":
-                                    startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
+                                    Intent intentionVuePrincipaleClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
+                                    intentionVuePrincipaleClient.putExtra("nom", donnees.get("nom").toString());
+                                    intentionVuePrincipaleClient.putExtra("mail", donnees.get("mail").toString());
+                                    startActivity(intentionVuePrincipaleClient);
                                     break;
                                 case "restaurant":
-                                    startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
+                                    Intent intentionVuePrincipaleRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                                    intentionVuePrincipaleRestaurant.putExtra("nom", donnees.get("nom").toString());
+                                    intentionVuePrincipaleRestaurant.putExtra("mail", donnees.get("mail").toString());
+                                    startActivity(intentionVuePrincipaleRestaurant);
                                     break;
                             }
                             chargementDialogue.dismiss();

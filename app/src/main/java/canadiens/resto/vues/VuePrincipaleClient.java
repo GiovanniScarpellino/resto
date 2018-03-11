@@ -46,6 +46,12 @@ public class VuePrincipaleClient extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        TextView menuHamburgerNom = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_client_nom);
+        TextView menuHamburgerMail = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_client_mail);
+
+        menuHamburgerNom.setText(getIntent().getStringExtra("nom"));
+        menuHamburgerMail.setText(getIntent().getStringExtra("mail"));
+
         changerDeFragment(TypeFragment.GoogleMap);
     }
 
