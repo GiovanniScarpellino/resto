@@ -86,7 +86,6 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 AlertDialog alert = builder.create();
                 alert.show();
             } else { // Retour quand on est sur un autre fragment que Réservations
-                System.out.println("retour normal");
                 super.onBackPressed();
             }
         }
