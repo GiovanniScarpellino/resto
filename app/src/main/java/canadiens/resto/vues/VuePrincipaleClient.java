@@ -65,11 +65,12 @@ public class VuePrincipaleClient extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        android.support.v4.app.Fragment monFragment = getSupportFragmentManager().findFragmentByTag("MAP");
+        android.support.v4.app.Fragment monFragmentMap = getSupportFragmentManager().findFragmentByTag("MAP");
+        android.support.v4.app.Fragment monFragmentDetail = getSupportFragmentManager().findFragmentByTag("DETAIL");
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
-            if (monFragment != null && monFragment.isVisible()){ //Retour quand on se trouve sur la GoogleMap
+            if (monFragmentMap != null && monFragmentMap.isVisible()){ //Retour quand on se trouve sur la GoogleMap
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Se déconnecter");
                 builder.setMessage("Sûr de vous ?");
@@ -95,6 +96,11 @@ public class VuePrincipaleClient extends AppCompatActivity
             }
 
 
+        }
+
+        if (monFragmentDetail != null && monFragmentDetail.isVisible()){
+            System.out.println("genial");
+            changerDeFragment(TypeFragment.GoogleMap);
         }
     }
 

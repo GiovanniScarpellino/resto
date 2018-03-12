@@ -186,7 +186,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                 argumentAPasser.putInt("idRestaurant", idRestaurantSelectionné);
                 fragmentDetailRestaurant.setArguments(argumentAPasser);
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, fragmentDetailRestaurant)
+                        .replace(R.id.conteneur_principal_client, fragmentDetailRestaurant, "DETAIL")
                         .commit();
             }
         });
