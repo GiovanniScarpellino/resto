@@ -1,8 +1,13 @@
 package canadiens.resto.vues;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -60,10 +65,36 @@ public class VuePrincipaleClient extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
+        android.support.v4.app.Fragment monFragment = getSupportFragmentManager().findFragmentByTag("MAP");
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
-            super.onBackPressed();
+            if (monFragment != null && monFragment.isVisible()){ //Retour quand on se trouve sur la GoogleMap
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Se déconnecter");
+                builder.setMessage("Sûr de vous ?");
+
+                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish(); // Déconnexion, arrive pas à quitter l'appli
+                    }
+                });
+
+                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else { // Retour quand on est sur un autre fragment que GoogleMap
+                System.out.println("retour normal");
+                super.onBackPressed();
+            }
+
+
         }
     }
 
@@ -126,19 +157,19 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap()).addToBackStack("my_fragment")
+                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap(), "MAP").addToBackStack("fragment_google_map")
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient()).addToBackStack("my_fragment")
+                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient()).addToBackStack("fragment_modification_client")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient()).addToBackStack("my_fragment")
+                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient()).addToBackStack("fragment_reservations_client")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
