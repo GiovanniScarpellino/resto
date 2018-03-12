@@ -1,5 +1,7 @@
 package canadiens.resto.vues;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -59,11 +61,36 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
+        android.support.v4.app.Fragment monFragmentReservations = getSupportFragmentManager().findFragmentByTag("RESERVATIONS");
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
-            super.onBackPressed();
+            if (monFragmentReservations != null && monFragmentReservations.isVisible()){ //Retour quand on se trouve sur les réservations
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Se déconnecter");
+                builder.setMessage("Sûr de vous ?");
+
+                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish(); // Déconnexion, arrive pas à quitter l'appli
+                    }
+                });
+
+                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else { // Retour quand on est sur un autre fragment que Réservations
+                System.out.println("retour normal");
+                super.onBackPressed();
+            }
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -98,7 +125,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         switch (fragment) {
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant()).addToBackStack("my_fragment")
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant(), "RESERVATIONS").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
                 break;
