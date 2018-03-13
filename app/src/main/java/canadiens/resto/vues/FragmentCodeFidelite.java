@@ -51,7 +51,7 @@ public class FragmentCodeFidelite extends Fragment {
         RequeteAPI.effectuerRequete(TypeRequeteAPI.RECUPERATION_CODE_FIDELITE, parametresAEnvoyer, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
-                Log.d(TAG, "quandErreur: Erreur lors de la récupération du code fidélité");
+                Toast.makeText(getContext(), "Erreur lors de la récupération du code fidélité", Toast.LENGTH_LONG).show();
             }
 
             @Override
