@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/ic_background_border"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background_border">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="75dp">
+        tools:layout_editor_absoluteY="75dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/champs_texte_detail_marqueur"
@@ -39,7 +40,7 @@
             android:layout_below="@+id/champs_texte_description_detail_marqueur"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
-            android:text="Cliquez pour réserver" />
+            android:text="Voir les détails" />
 
     </RelativeLayout>
 
