@@ -100,7 +100,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/style_champs_texte"
         android:ems="10"
-        android:hint="Mote de passe"
+        android:hint="Mot de passe"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/colorPrimary"
