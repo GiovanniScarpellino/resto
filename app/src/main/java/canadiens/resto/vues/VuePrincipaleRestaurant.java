@@ -175,12 +175,38 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int codeRequete, int codeResultat, Intent donnees) {
-        IntentResult resultat = IntentIntegrator.parseActivityResult(codeRequete, codeResultat, donnees);
+        final IntentResult resultat = IntentIntegrator.parseActivityResult(codeRequete, codeResultat, donnees);
         if (resultat != null) {
             if (resultat.getContents() == null) {
                 Toast.makeText(this, "Vous avez annuler le scan...", Toast.LENGTH_LONG).show();
             } else {
-                //Si il a réussi à scanner un code
+                JSONObject jsonDonnees = new JSONObject();
+
+                try {
+                    jsonDonnees.put("codeFidelite", resultat.getContents());
+                    jsonDonnees.put("token", Token.recupererToken(VuePrincipaleRestaurant.this));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                RequeteAPI.effectuerRequete(TypeRequeteAPI.VERIFICATION_CODE_FIDELITE, jsonDonnees, new ActionsResultatAPI() {
+                    @Override
+                    public void quandErreur() {
+                        Log.e("Scanner :", "erreur lors de la requète vers l'API !");
+                        Toast.makeText(VuePrincipaleRestaurant.this, "Le code n'est pas valide !", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void quandSucces(JSONObject donnees) throws JSONException {
+                        FragmentModificationPointClient fragmentModificationPointClient = new FragmentModificationPointClient();
+                        Bundle argumentAPasser = new Bundle();
+                        argumentAPasser.putInt("points", donnees.getInt("points"));
+                        argumentAPasser.putString("code", resultat.getContents());
+                        fragmentModificationPointClient.setArguments(argumentAPasser);
+                        getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.conteneur_principal_restaurant, fragmentModificationPointClient)
+                                    .commit();
+                    }
+                });
             }
         } else {
             super.onActivityResult(codeRequete, codeResultat, donnees);
