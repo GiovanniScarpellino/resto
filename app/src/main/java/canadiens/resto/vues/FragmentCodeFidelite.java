@@ -3,7 +3,6 @@ package canadiens.resto.vues;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +23,16 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.ChargementDialogue;
-
-import static android.content.ContentValues.TAG;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class FragmentCodeFidelite extends Fragment {
     private String token;
     private String codeFidelite;
     private ImageView imageQrCode;
-    private ChargementDialogue chargementDialogue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chargementDialogue = new ChargementDialogue(getContext());
-        chargementDialogue.setTexte("Obtention du code...");
         token = Token.recupererToken(getContext());
         JSONObject parametresAEnvoyer = new JSONObject();
         try {
@@ -47,16 +41,18 @@ public class FragmentCodeFidelite extends Fragment {
             e.printStackTrace();
         }
 
-        chargementDialogue.show();
+        final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Chargement du QRCode...");
+        dialogueChargement.show();
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.RECUPERATION_CODE_FIDELITE, parametresAEnvoyer, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
-                Toast.makeText(getContext(), "Erreur lors de la récupération du code fidélité", Toast.LENGTH_LONG).show();
+                dialogueChargement.dismiss();
+                Toast.makeText(getContext(), "Impossible de charger le QRCode", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                chargementDialogue.setTexte("Génération du QRCode...");
                 codeFidelite = donnees.getString("code");
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
@@ -68,7 +64,7 @@ public class FragmentCodeFidelite extends Fragment {
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
-                chargementDialogue.dismiss();
+                dialogueChargement.dismiss();
             }
         });
     }

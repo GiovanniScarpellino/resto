@@ -18,6 +18,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class FragmentModificationClient extends Fragment {
     private static final String TOKEN = "2548fb4657f078ba30e40afd1da2ec13";
@@ -72,14 +73,19 @@ public class FragmentModificationClient extends Fragment {
         parametres.put("motDePasse", champMDP.getText().toString());
         parametres.put("token", TOKEN);
 
+        final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Modification du profil...");
+        dialogueChargement.show();
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.MODIFICATION_CLIENT, parametres, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
+                dialogueChargement.dismiss();
                 Toast.makeText(getContext(),"Impossible de modifier le profil", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
+                dialogueChargement.dismiss();
                 Toast.makeText(getContext(),"Profil modifié !", Toast.LENGTH_LONG).show();
             }
         });

@@ -16,6 +16,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class VueInscriptionRestaurant extends AppCompatActivity {
 
@@ -63,13 +64,18 @@ public class VueInscriptionRestaurant extends AppCompatActivity {
                     parametres.put("mail", champMail.getText());
                     parametres.put("motDePasse", champMDP.getText());
 
+                    final DialogueChargement dialogueChargement = new DialogueChargement(VueInscriptionRestaurant.this, "Inscription...");
+                    dialogueChargement.show();
+
                     RequeteAPI.effectuerRequete(TypeRequeteAPI.INSCRIPTION_RESTAURANT, parametres, new ActionsResultatAPI() {
                         @Override
                         public void quandErreur() {
-                            Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
+                            dialogueChargement.dismiss();
+                            Toast.makeText(getApplicationContext(), "Erreur lors de l'inscription", Toast.LENGTH_LONG).show();
                         }
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
+                            dialogueChargement.dismiss();
                             Intent intentionRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
                             intentionRestaurant.putExtra("token", donnees.get("token").toString());
 

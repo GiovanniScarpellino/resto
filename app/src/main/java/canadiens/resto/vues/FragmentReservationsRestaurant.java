@@ -24,7 +24,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.ChargementDialogue;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class FragmentReservationsRestaurant extends Fragment {
     private ListView listeReservations;
@@ -67,7 +67,7 @@ public class FragmentReservationsRestaurant extends Fragment {
             JSONObject parametres = new JSONObject();
             parametres.put("token", Token.recupererToken(getContext()));
 
-            final ChargementDialogue dialogueChargement = new ChargementDialogue(getContext(), "Chargement de vos réservations...");
+            final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Chargement des réservations...");
             dialogueChargement.show();
 
             RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATIONS_RESTAURANT, parametres, new ActionsResultatAPI() {

@@ -26,6 +26,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class FragmentReservationsClient extends Fragment {
     private String token;
@@ -73,10 +74,14 @@ public class FragmentReservationsClient extends Fragment {
             JSONObject parametres = new JSONObject();
             parametres.put("token", token);
 
+            final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Chargement des réservations...");
+            dialogueChargement.show();
+
             RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATIONS_CLIENT, parametres, new ActionsResultatAPI() {
                 @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void quandErreur() {
+                    dialogueChargement.dismiss();
                     Toast.makeText(getContext(), "Impossible de récupérer les réservations", Toast.LENGTH_LONG).show();
                 }
 
@@ -113,6 +118,8 @@ public class FragmentReservationsClient extends Fragment {
                     );
 
                     listeReservations.setAdapter(adapteur);
+
+                    dialogueChargement.dismiss();
                 }
             });
         }

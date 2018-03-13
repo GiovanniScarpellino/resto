@@ -35,6 +35,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
+import canadiens.resto.dialogues.DialogueChargement;
 import canadiens.resto.dialogues.DialogueRecupererNombre;
 
 public class FragmentDetailRestaurant extends Fragment implements
@@ -190,16 +191,20 @@ public class FragmentDetailRestaurant extends Fragment implements
                     e.printStackTrace();
                 }
 
+                final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Réservation...");
+                dialogueChargement.show();
+
                 RequeteAPI.effectuerRequete(TypeRequeteAPI.RESERVATION, jsonDonnees, new ActionsResultatAPI() {
                     @Override
                     public void quandErreur() {
-                        Log.e(TAG, "erreur lors de la requète vers l'API !");
-                        Toast.makeText(getContext(), "Il y a eu un problème avec votre réservation...", Toast.LENGTH_LONG).show();
+                        dialogueChargement.dismiss();
+                        Toast.makeText(getContext(), "Erreur lors de la réservation", Toast.LENGTH_LONG).show();
                     }
 
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void quandSucces(JSONObject donnees) throws JSONException {
+                        dialogueChargement.dismiss();
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.conteneur_principal_client, new FragmentReservationsClient())
                                 .commit();
@@ -218,10 +223,14 @@ public class FragmentDetailRestaurant extends Fragment implements
             e.printStackTrace();
         }
 
+        final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Chargement du restaurant...");
+        dialogueChargement.show();
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DETAILS_RESTAURANT, jsonDonnees, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
-                Log.e(TAG, "erreur lors de la requète vers l'API !");
+                dialogueChargement.dismiss();
+                Toast.makeText(getContext(), "Impossible de récupérer les informations du restaurant", Toast.LENGTH_LONG).show();
             }
 
             @SuppressLint("SetTextI18n")
@@ -234,6 +243,8 @@ public class FragmentDetailRestaurant extends Fragment implements
                 telephone.setText("Téléphone : " + restaurant.getString("telephone"));
                 mail.setText("Mail : " + restaurant.getString("mail"));
                 description.setText(restaurant.getString("description"));
+
+                dialogueChargement.dismiss();
             }
         });
         /* ----------------------------------------------------------------------*/

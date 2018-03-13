@@ -27,7 +27,7 @@ import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.ChangerOrientationVueQRCode;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.ChargementDialogue;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class VuePrincipaleRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -154,19 +154,19 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         JSONObject parametres = new JSONObject();
         parametres.put("token", Token.recupererToken(this));
 
-        final ChargementDialogue dialogueChargement = new ChargementDialogue(this, "Déconnexion...");
+        final DialogueChargement dialogueChargement = new DialogueChargement(this, "Déconnexion...");
         dialogueChargement.show();
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
                 dialogueChargement.dismiss();
-                Toast.makeText(VuePrincipaleRestaurant.this, "Erreur lors de la déconnexion, veuillez réessayer...", Toast.LENGTH_LONG).show();
+                Toast.makeText(VuePrincipaleRestaurant.this, "Erreur lors de la déconnexion", Toast.LENGTH_LONG).show();
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                Token.definirToken(getApplicationContext(), "erreur");
                 dialogueChargement.dismiss();
+                Token.definirToken(getApplicationContext(), "erreur");
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleRestaurant.this, VueConnexion.class);
                 startActivity(intentionNaviguerVueConnexion);
             }
@@ -188,15 +188,20 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                final DialogueChargement dialogueChargement = new DialogueChargement(this, "Validation du code...");
+                dialogueChargement.show();
+
                 RequeteAPI.effectuerRequete(TypeRequeteAPI.VERIFICATION_CODE_FIDELITE, jsonDonnees, new ActionsResultatAPI() {
                     @Override
                     public void quandErreur() {
-                        Log.e("Scanner :", "erreur lors de la requète vers l'API !");
+                        dialogueChargement.dismiss();
                         Toast.makeText(VuePrincipaleRestaurant.this, "Le code n'est pas valide !", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void quandSucces(JSONObject donnees) throws JSONException {
+                        dialogueChargement.dismiss();
                         FragmentModificationPointClient fragmentModificationPointClient = new FragmentModificationPointClient();
                         Bundle argumentAPasser = new Bundle();
                         argumentAPasser.putInt("points", donnees.getInt("points"));
