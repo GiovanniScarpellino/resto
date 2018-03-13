@@ -11,10 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.ChangerOrientationVueQRCode;
 import canadiens.resto.assistants.Token;
 import canadiens.resto.dialogues.ChargementDialogue;
 
@@ -113,6 +116,16 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                     Log.e("Deconnexion", "JSONException lors de la déconnexion");
                 }
                 break;
+            case R.id.nav_scanner_qr_code:
+                IntentIntegrator intention = new IntentIntegrator(this);
+                intention.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                intention.setPrompt("Scanner le code QR");
+                intention.setCameraId(0);
+                intention.setCaptureActivity(ChangerOrientationVueQRCode.class);
+                intention.setOrientationLocked(true);
+                intention.setBeepEnabled(false);
+                intention.initiateScan();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,5 +171,19 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 startActivity(intentionNaviguerVueConnexion);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int codeRequete, int codeResultat, Intent donnees) {
+        IntentResult resultat = IntentIntegrator.parseActivityResult(codeRequete, codeResultat, donnees);
+        if (resultat != null) {
+            if (resultat.getContents() == null) {
+                Toast.makeText(this, "Vous avez annuler le scan...", Toast.LENGTH_LONG).show();
+            } else {
+                //Si il a réussi à scanner un code
+            }
+        } else {
+            super.onActivityResult(codeRequete, codeResultat, donnees);
+        }
     }
 }
