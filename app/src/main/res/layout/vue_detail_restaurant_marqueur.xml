@@ -11,15 +11,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="75dp">
 
-        <Button
-            android:id="@+id/bouton_detail_marqueur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/champs_texte_description_detail_marqueur"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="18dp"
-            android:text="@string/texte_bouton_detail_marqueur" />
-
         <TextView
             android:id="@+id/champs_texte_detail_marqueur"
             android:layout_width="300dp"
@@ -39,7 +30,8 @@
             android:layout_below="@+id/champs_texte_detail_marqueur"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/holo_orange_dark"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

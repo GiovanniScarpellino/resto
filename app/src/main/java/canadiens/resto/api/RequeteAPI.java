@@ -18,7 +18,7 @@ public class RequeteAPI {
     /**
      * URL de l'API
      */
-    public static final String API_URL = "http://localhost";
+    public static final String API_URL = "http://scarpellino.fr:3000";
 
     /**
      * Genere l'URL de la requete vers l'API en encodant les parametres JSON

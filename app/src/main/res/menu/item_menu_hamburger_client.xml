@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Modification du profil" />
         <item
+            android:id="@+id/nav_afficher_code_fidelite"
+            android:icon="@drawable/ic_sync_black_24dp"
+            android:title="Afficher code fidelite"/>
+        <item
             android:id="@+id/nav_deconnexion_client"
             android:icon="@drawable/ic_menu_deconnexion_24dp"
             android:title="Déconnexion" />

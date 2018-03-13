@@ -31,7 +31,7 @@ import canadiens.resto.assistants.Token;
 import canadiens.resto.dialogues.ChargementDialogue;
 
 public class VuePrincipaleClient extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener, FragmentCodeFidelite.OnFragmentInteractionListener {
 
     public static NavigationView navigationView;
 
@@ -148,6 +148,9 @@ public class VuePrincipaleClient extends AppCompatActivity
                     Log.e("Deconnexion", "JSONException lors de la déconnexion");
                 }
                 break;
+            case R.id.nav_afficher_code_fidelite :
+                changerDeFragment(TypeFragment.CodeFidelite);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,6 +175,12 @@ public class VuePrincipaleClient extends AppCompatActivity
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.conteneur_principal_client, new FragmentReservationsClient()).addToBackStack("fragment_reservations_client")
+                        .commit();
+                navigationView.setCheckedItem(R.id.nav_reservations_client);
+                break;
+            case CodeFidelite:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.conteneur_principal_client, new FragmentCodeFidelite()).addToBackStack("fragment_code_fidelite")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;

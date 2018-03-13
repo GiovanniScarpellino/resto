@@ -5,5 +5,6 @@ public enum TypeFragment {
     ReservationsRestaurant,
     ModificationRestaurant,
     ReservationsClient,
-    ModificationClient
+    ModificationClient,
+    CodeFidelite
 }
