@@ -31,7 +31,7 @@ import canadiens.resto.assistants.Token;
 import canadiens.resto.dialogues.ChargementDialogue;
 
 public class VuePrincipaleClient extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener, FragmentCodeFidelite.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener{
 
     public static NavigationView navigationView;
 
