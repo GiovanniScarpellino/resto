@@ -161,15 +161,10 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         googleMapCourante.setInfoWindowAdapter(new InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
                 String[] tableauInformation = marker.getSnippet().split("/");
 
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                View vueMarqueur = inflater.inflate(R.layout.vue_detail_restaurant_marqueur, null, false);
+                View vueMarqueur = inflater.inflate(R.layout.vue_detail_restaurant_marqueur, null, true);
                 TextView champstexteCourant = vueMarqueur.findViewById(R.id.champs_texte_detail_marqueur);
                 champstexteCourant.setText(marker.getTitle());
                 TextView texteDescriptionDetailMarqueur = vueMarqueur.findViewById(R.id.champs_texte_description_detail_marqueur);
@@ -179,6 +174,11 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                 }
                 texteDescriptionDetailMarqueur.setText(tableauInformation[1]);
                 return vueMarqueur;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
             }
         });
         
