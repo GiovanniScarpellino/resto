@@ -347,6 +347,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         if(rayonRestaurantProche <= 0)
             rayonRestaurantProche = 1;
         try {
+            rayonRestaurantProche /= 1000;
             jsonDonnees.put("latitude", latitude);
             jsonDonnees.put("longitude", longitude);
             jsonDonnees.put("rayon", rayonRestaurantProche);
