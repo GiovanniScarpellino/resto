@@ -1,13 +1,10 @@
 package canadiens.resto.vues;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,10 +25,10 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.ChargementDialogue;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class VuePrincipaleClient extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener, FragmentCodeFidelite.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentGoogleMap.OnFragmentInteractionListener{
 
     public static NavigationView navigationView;
 
@@ -191,19 +188,19 @@ public class VuePrincipaleClient extends AppCompatActivity
         JSONObject parametres = new JSONObject();
         parametres.put("token", Token.recupererToken(this));
 
-        final ChargementDialogue dialogueChargement = new ChargementDialogue(this, "Déconnexion...");
+        final DialogueChargement dialogueChargement = new DialogueChargement(this, "Déconnexion...");
         dialogueChargement.show();
 
         RequeteAPI.effectuerRequete(TypeRequeteAPI.DECONNEXION, parametres, new ActionsResultatAPI() {
             @Override
             public void quandErreur() {
                 dialogueChargement.dismiss();
-                Toast.makeText(VuePrincipaleClient.this, "Erreur lors de la déconnexion, veuillez réessayer...", Toast.LENGTH_LONG).show();
+                Toast.makeText(VuePrincipaleClient.this, "Erreur lors de la déconnexion", Toast.LENGTH_LONG).show();
             }
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
-                Token.definirToken(getApplicationContext(), "erreur");
                 dialogueChargement.dismiss();
+                Token.definirToken(getApplicationContext(), "erreur");
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleClient.this, VueConnexion.class);
                 startActivity(intentionNaviguerVueConnexion);
             }

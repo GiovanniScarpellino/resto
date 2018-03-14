@@ -16,7 +16,7 @@ import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
 import canadiens.resto.assistants.Token;
-import canadiens.resto.dialogues.ChargementDialogue;
+import canadiens.resto.dialogues.DialogueChargement;
 
 public class VueConnexion extends AppCompatActivity {
     protected EditText champsIdentifiant;
@@ -26,17 +26,18 @@ public class VueConnexion extends AppCompatActivity {
     protected Button btnClient;
     protected Button btnRestaurant;
 
-    private ChargementDialogue chargementDialogue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (Token.recupererToken(this).equals("erreur") == false){
-            if (Token.recupererType(this).equals("client")) {
-                startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
-            }
-            if (Token.recupererType(this).equals("restaurant")) {
-                startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
+        //On affiche la vue en fonction du type de l'utilisateur
+        if (!Token.recupererToken(this).equals("erreur")){
+            switch(Token.recupererType(this)){
+                case "client":
+                    startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
+                    break;
+                case "restaurant":
+                    startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
+                    break;
             }
         }
 
@@ -53,8 +54,6 @@ public class VueConnexion extends AppCompatActivity {
         ajouterEcouteur();
 
         new Intent(VueConnexion.this, VuePrincipaleClient.class);
-
-        chargementDialogue = new ChargementDialogue(this);
     }
 
     /**
@@ -88,16 +87,19 @@ public class VueConnexion extends AppCompatActivity {
                     parametres.put("login", champsIdentifiant.getText());
                     parametres.put("motDePasse", champsMDP.getText());
 
-                    chargementDialogue.show();
+                    final DialogueChargement dialogueChargement = new DialogueChargement(VueConnexion.this, "Connexion...");
+                    dialogueChargement.show();
+
                     RequeteAPI.effectuerRequete(TypeRequeteAPI.CONNEXION, parametres, new ActionsResultatAPI() {
                         @Override
                         public void quandErreur() {
-                            chargementDialogue.dismiss();
-                            Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
+                            dialogueChargement.dismiss();
+                            Toast.makeText(getApplicationContext(), "Connexion impossible", Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void quandSucces(JSONObject donnees) throws JSONException {
+                            dialogueChargement.dismiss();
                             Token.definirToken(getApplicationContext(), donnees.get("token").toString());
                             Token.definirType(getApplicationContext(), donnees.get("type").toString());
                             switch (donnees.get("type").toString()) {
@@ -114,7 +116,6 @@ public class VueConnexion extends AppCompatActivity {
                                     startActivity(intentionVuePrincipaleRestaurant);
                                     break;
                             }
-                            chargementDialogue.dismiss();
                         }
                     });
                 } catch (JSONException e) {

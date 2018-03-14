@@ -51,6 +51,7 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.dialogues.DialogueChargement;
 import canadiens.resto.modeles.Restaurant;
 
 public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback,
@@ -354,12 +355,12 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         Log.d(TAG, "recupererRestaurantProche: " + rayonRestaurantProche);
+
         RequeteAPI.effectuerRequete(TypeRequeteAPI.RESTAURANTS_PROCHES, jsonDonnees, new ActionsResultatAPI() {
             @Override
-            public void quandErreur() {
-                Log.e(TAG, "quandErreur: Erreur lors de la requête vers l'API");
-            }
+            public void quandErreur() {}
 
             @Override
             public void quandSucces(JSONObject donnees) throws JSONException {
