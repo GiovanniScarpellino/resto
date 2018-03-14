@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -35,6 +37,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -325,6 +329,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
             markerOptions.position(new LatLng(restaurant.getLatitude(), restaurant.getLongitude()));
             markerOptions.title(restaurant.getNom());
             markerOptions.snippet(restaurant.getIdRestaurant() + "/" + restaurant.getDescription());
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logo_gogoresto));
             //On ajoute ce marqueur dans la liste des marqueurs affiches et sur la Google Map
             restaurantsMarqueursAffiches.add(new Pair<Restaurant, Marker>(
                     restaurant,
