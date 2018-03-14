@@ -208,7 +208,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                         argumentAPasser.putString("code", resultat.getContents());
                         fragmentModificationPointClient.setArguments(argumentAPasser);
                         getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.conteneur_principal_restaurant, fragmentModificationPointClient)
+                                    .replace(R.id.conteneur_principal_restaurant, fragmentModificationPointClient,"POINT")
                                     .commit();
                     }
                 });

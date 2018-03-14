@@ -64,6 +64,7 @@ public class VuePrincipaleClient extends AppCompatActivity
     public void onBackPressed() {
         android.support.v4.app.Fragment monFragmentMap = getSupportFragmentManager().findFragmentByTag("MAP");
         android.support.v4.app.Fragment monFragmentDetail = getSupportFragmentManager().findFragmentByTag("DETAIL");
+        android.support.v4.app.Fragment monFragmentPoint = getSupportFragmentManager().findFragmentByTag("POINT");
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -88,13 +89,16 @@ public class VuePrincipaleClient extends AppCompatActivity
                 AlertDialog alert = builder.create();
                 alert.show();
             } else { // Retour quand on est sur un autre fragment que GoogleMap
-                super.onBackPressed();
+                if (monFragmentPoint != null && monFragmentPoint.isVisible()){ // Si on se trouve sur la fragment pour modifier les points d'un client un restaurant
+                    changerDeFragment(TypeFragment.GoogleMap);
+                } else {super.onBackPressed();}
             }
         }
 
         if (monFragmentDetail != null && monFragmentDetail.isVisible()){ // Si on se trouve sur la fragment pour réserver un restaurant
             changerDeFragment(TypeFragment.GoogleMap);
         }
+
     }
 
     @Override
