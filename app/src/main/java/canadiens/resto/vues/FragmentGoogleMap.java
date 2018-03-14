@@ -330,6 +330,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
             markerOptions.title(restaurant.getNom());
             markerOptions.snippet(restaurant.getIdRestaurant() + "/" + restaurant.getDescription());
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logo_gogoresto));
+            markerOptions.anchor(0.5f, 0.5f);
             //On ajoute ce marqueur dans la liste des marqueurs affiches et sur la Google Map
             restaurantsMarqueursAffiches.add(new Pair<Restaurant, Marker>(
                     restaurant,
