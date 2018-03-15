@@ -15,7 +15,8 @@
         <item
             android:id="@+id/nav_scanner_qr_code"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Scanner un QRCode" />
+            android:title="Scanner un QRCode"
+            android:checkable="false"/>
         <item
             android:id="@+id/nav_deconnexion_restaurant"
             android:icon="@drawable/ic_menu_deconnexion_24dp"
