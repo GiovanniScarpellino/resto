@@ -33,10 +33,15 @@ public class VueConnexion extends AppCompatActivity {
         if (!Token.recupererToken(this).equals("erreur")){
             switch(Token.recupererType(this)){
                 case "client":
-                    startActivity(new Intent(getApplicationContext(), VuePrincipaleClient.class));
+                    Intent intentionVuePrincipaleClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
+                    intentionVuePrincipaleClient.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intentionVuePrincipaleClient);
+                    startActivity(intentionVuePrincipaleClient);
                     break;
                 case "restaurant":
-                    startActivity(new Intent(getApplicationContext(), VuePrincipaleRestaurant.class));
+                    Intent intentionVuePrincipaleRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                    intentionVuePrincipaleRestaurant.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intentionVuePrincipaleRestaurant);
                     break;
             }
         }
@@ -105,12 +110,14 @@ public class VueConnexion extends AppCompatActivity {
                             switch (donnees.get("type").toString()) {
                                 case "client":
                                     Intent intentionVuePrincipaleClient = new Intent(getApplicationContext(), VuePrincipaleClient.class);
+                                    intentionVuePrincipaleClient.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intentionVuePrincipaleClient.putExtra("nom", donnees.get("nom").toString());
                                     intentionVuePrincipaleClient.putExtra("mail", donnees.get("mail").toString());
                                     startActivity(intentionVuePrincipaleClient);
                                     break;
                                 case "restaurant":
                                     Intent intentionVuePrincipaleRestaurant = new Intent(getApplicationContext(), VuePrincipaleRestaurant.class);
+                                    intentionVuePrincipaleRestaurant.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     intentionVuePrincipaleRestaurant.putExtra("nom", donnees.get("nom").toString());
                                     intentionVuePrincipaleRestaurant.putExtra("mail", donnees.get("mail").toString());
                                     startActivity(intentionVuePrincipaleRestaurant);
