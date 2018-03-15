@@ -16,6 +16,8 @@ public final class Token {
     private String type;
     public final static String TOKEN_UTILISATEUR = "token utilisateur";
     public final static String TYPE_UTILISATEUR = "type utilisateur";
+    public final static String NOM_UTILISATEUR = "nom utilisateur";
+    public final static String MAIL_UTILISATEUR = "mail utilisateur";
 
     private Token() { // private constructor
         token = "";
@@ -42,11 +44,38 @@ public final class Token {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(TYPE_UTILISATEUR, valeurType);
-        editor.commit();
+        editor.apply();
     }
     public static String recupererType(Context contexte) {
         // Récupération depuis les préférences partagées
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
         return preferences.getString(TYPE_UTILISATEUR, "erreur");
+    }
+
+    public static void definirNom(Context contexte, String valeurNom) {
+        // Ajout dans les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(NOM_UTILISATEUR, valeurNom);
+        editor.apply();
+    }
+    public static String recupererNom(Context contexte) {
+        // Récupération depuis les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        return preferences.getString(NOM_UTILISATEUR, "");
+    }
+
+
+    public static void definirMail(Context contexte, String valeurMail) {
+        // Ajout dans les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(MAIL_UTILISATEUR, valeurMail);
+        editor.apply();
+    }
+    public static String recupererMail(Context contexte) {
+        // Récupération depuis les préférences partagées
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contexte);
+        return preferences.getString(MAIL_UTILISATEUR, "");
     }
 }
