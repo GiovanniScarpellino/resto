@@ -4,7 +4,8 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="canadiens.resto.vues.FragmentModificationClient">
+    tools:context="canadiens.resto.vues.FragmentModificationClient"
+    android:background="@color/couleurFond">
 
     <TextView
         android:id="@+id/textView3"

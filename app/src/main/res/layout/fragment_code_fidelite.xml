@@ -4,7 +4,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="canadiens.resto.vues.FragmentCodeFidelite">
+    tools:context="canadiens.resto.vues.FragmentCodeFidelite"
+    android:background="@color/couleurFond">
 
     <!-- TODO: Update blank fragment layout -->
 
