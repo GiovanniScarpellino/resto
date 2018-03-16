@@ -3,6 +3,7 @@ package canadiens.resto.vues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,40 @@ public class FragmentModificationRestaurant extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        //On rempli le formulaire avec les données du restaurant récupérées depuis l'API
+        try {
+            preremplirFormulaireModification();
+        } catch (JSONException e) {
+            Log.e("RemplirFormModification", e.getMessage());
+        }
+    }
+
+    public void preremplirFormulaireModification() throws JSONException{
+        JSONObject parametres = new JSONObject();
+        parametres.put("token", Token.recupererToken(getContext()));
+
+        final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Récupération des informations...");
+        dialogueChargement.show();
+
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.RECUPERATION_RESTAURANT, parametres, new ActionsResultatAPI() {
+            @Override
+            public void quandErreur() {
+                dialogueChargement.dismiss();
+                Toast.makeText(getContext(), "Impossible de récupérer les informations du restaurant", Toast.LENGTH_LONG).show();
+                Log.e("API", "Impossible de récupérer les informations du restaurant");
+            }
+            @Override
+            public void quandSucces(JSONObject donnees) throws JSONException {
+                JSONObject restaurantRecupere = donnees.getJSONObject("restaurant");
+                champNom.setText(restaurantRecupere.getString("nom"));
+                champDescription.setText(restaurantRecupere.getString("description"));
+                champAdresse.setText(restaurantRecupere.getString("adresse"));
+                champTelephone.setText(restaurantRecupere.getString("telephone"));
+                champMail.setText(restaurantRecupere.getString("mail"));
+                dialogueChargement.dismiss();
             }
         });
     }
