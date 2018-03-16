@@ -182,7 +182,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         final IntentResult resultat = IntentIntegrator.parseActivityResult(codeRequete, codeResultat, donnees);
         if (resultat != null) {
             if (resultat.getContents() == null) {
-                Toast.makeText(this, "Vous avez annuler le scan...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Vous avez annulé le scan...", Toast.LENGTH_LONG).show();
             } else {
                 JSONObject jsonDonnees = new JSONObject();
 
