@@ -4,6 +4,7 @@ package canadiens.resto.vues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,10 @@ import canadiens.resto.R;
 import canadiens.resto.api.ActionsResultatAPI;
 import canadiens.resto.api.RequeteAPI;
 import canadiens.resto.api.TypeRequeteAPI;
+import canadiens.resto.assistants.Token;
 import canadiens.resto.dialogues.DialogueChargement;
 
 public class FragmentModificationClient extends Fragment {
-    private static final String TOKEN = "2548fb4657f078ba30e40afd1da2ec13";
-
     protected EditText champNom;
     protected EditText champPrenom;
     protected EditText champTelephone;
@@ -62,6 +62,39 @@ public class FragmentModificationClient extends Fragment {
                 }
             }
         });
+
+        //On rempli le formulaire avec les données du client récupérées depuis l'API
+        try {
+            preremplirFormulaireModification();
+        } catch (JSONException e) {
+            Log.e("RemplirFormModification", e.getMessage());
+        }
+    }
+
+    public void preremplirFormulaireModification() throws JSONException{
+        JSONObject parametres = new JSONObject();
+        parametres.put("token", Token.recupererToken(getContext()));
+
+        final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Récupération des informations...");
+        dialogueChargement.show();
+
+        RequeteAPI.effectuerRequete(TypeRequeteAPI.RECUPERATION_CLIENT, parametres, new ActionsResultatAPI() {
+            @Override
+            public void quandErreur() {
+                dialogueChargement.dismiss();
+                Toast.makeText(getContext(), "Impossible de récupérer les informations du profil", Toast.LENGTH_LONG).show();
+                Log.e("API", "Impossible de récupérer les informations du client");
+            }
+            @Override
+            public void quandSucces(JSONObject donnees) throws JSONException {
+                JSONObject clientRecupere = donnees.getJSONObject("client");
+                champNom.setText(clientRecupere.getString("nom"));
+                champPrenom.setText(clientRecupere.getString("prenom"));
+                champTelephone.setText(clientRecupere.getString("telephone"));
+                champMail.setText(clientRecupere.getString("mail"));
+                dialogueChargement.dismiss();
+            }
+        });
     }
 
     public void modifierClient() throws JSONException{
@@ -71,7 +104,7 @@ public class FragmentModificationClient extends Fragment {
         parametres.put("telephone", champTelephone.getText().toString());
         parametres.put("mail", champMail.getText().toString());
         parametres.put("motDePasse", champMDP.getText().toString());
-        parametres.put("token", TOKEN);
+        parametres.put("token", Token.recupererToken(getContext()));
 
         final DialogueChargement dialogueChargement = new DialogueChargement(getContext(), "Modification du profil...");
         dialogueChargement.show();
