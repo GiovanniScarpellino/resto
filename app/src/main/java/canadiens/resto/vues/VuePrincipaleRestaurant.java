@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,16 +39,16 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_principale_restaurant);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant);
+        Toolbar toolbar = findViewById(R.id.toolbar_restaurant);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView menuHamburgerNom = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_restaurant_nom);
@@ -68,19 +69,21 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        android.support.v4.app.Fragment monFragmentReservations = getSupportFragmentManager().findFragmentByTag("RESERVATIONS");
+        Fragment fragmentReservations = getSupportFragmentManager().findFragmentByTag(TypeFragment.ReservationsRestaurant+"");
+        Fragment fragmentModification = getSupportFragmentManager().findFragmentByTag(TypeFragment.ModificationRestaurant+"");
+
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
-            if (monFragmentReservations != null && monFragmentReservations.isVisible()){ //Retour quand on se trouve sur les réservations
+            if (fragmentReservations != null && fragmentReservations.isVisible()){ //Retour quand on se trouve sur les réservations
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Se déconnecter");
-                builder.setMessage("Sûr de vous ?");
+                builder.setTitle("Fermer l'application ?");
+                builder.setMessage("Voulez vous fermer l'application ?");
 
                 builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        finish(); // Déconnexion, arrive pas à quitter l'appli
+                        finish();
                     }
                 });
 
@@ -97,6 +100,12 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
             }
         }
 
+        //Actualiser le menu hamburger
+        if(fragmentReservations != null && fragmentReservations.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
+        }else if(fragmentModification != null && fragmentModification.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_modification_profil_restaurant);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -141,13 +150,13 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         switch (fragment) {
             case ReservationsRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant(), "RESERVATIONS").addToBackStack("my_fragment")
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant(), TypeFragment.ReservationsRestaurant+"").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_restaurant);
                 break;
             case ModificationRestaurant:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant()).addToBackStack("my_fragment")
+                        .replace(R.id.conteneur_principal_restaurant, new FragmentModificationRestaurant(), TypeFragment.ModificationRestaurant+"").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_restaurant);
                 break;
@@ -212,7 +221,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                         argumentAPasser.putString("code", resultat.getContents());
                         fragmentModificationPointClient.setArguments(argumentAPasser);
                         getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.conteneur_principal_restaurant, fragmentModificationPointClient,"POINT")
+                                    .replace(R.id.conteneur_principal_restaurant, fragmentModificationPointClient,TypeFragment.ModifierPointsClient+"")
                                     .commit();
                     }
                 });
@@ -220,5 +229,9 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
         } else {
             super.onActivityResult(codeRequete, codeResultat, donnees);
         }
+    }
+
+    public NavigationView getNavigationView() {
+        return navigationView;
     }
 }
