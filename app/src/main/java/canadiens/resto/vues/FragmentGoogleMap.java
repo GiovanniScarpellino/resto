@@ -147,7 +147,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
     public void onMapReady(final GoogleMap googleMap) {
         googleMapCourante = googleMap;
         creerRequeteLocalisation();
-        verifierLocalisationActivee(googleMap);
+        verifierLocalisationActivee();
         
         //Demande la permission à l'utilisateur pour utiliser la localisation
         String permissions[] = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -236,6 +236,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                     @Override
                     public void onSuccess(Location localisation) {
                         if(localisation != null) {
+                            verifierLocalisationActivee();
                             changerLocalisationCamera(localisation, 17);
                         }
                     }
@@ -260,6 +261,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         miseAJourLocalisation = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult resultatLocalisation) {
+                verifierLocalisationActivee();
                 for (Location localisation : resultatLocalisation.getLocations()) {
                     recupererRestaurantProche(localisation.getLatitude(), localisation.getLongitude());
                 }
@@ -272,21 +274,18 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
     /**
      * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de localisation
-     * @param googleMap
      */
-    public void verifierLocalisationActivee(GoogleMap googleMap) {
+    public void verifierLocalisationActivee() {
         LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsActive = false;
-        boolean reseauActive = false;
 
         try {
             gpsActive = gestionLocation.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            reseauActive = gestionLocation.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch(Exception exception1) {
             Log.e(TAG, exception1.getMessage());
         }
 
-        if(!gpsActive && !reseauActive) {
+        if(!gpsActive) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
             dialog.setMessage(R.string.indication_fenetre_location);
             dialog.setPositiveButton(R.string.bouton_oui, new DialogInterface.OnClickListener() {
@@ -300,11 +299,12 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    getActivity().finish();
+                    verifierLocalisationActivee();
                 }
             });
             dialog.show();
         }
+        Log.d(TAG, "verifierLocalisationActivee: Localisation : " + gpsActive);
     }
 
 
@@ -313,6 +313,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      * @param nouvelleLocalisation
      */
     private void changerLocalisationCamera(Location nouvelleLocalisation, int niveauZoom) {
+        verifierLocalisationActivee();
         CameraUpdate pointACentrer = CameraUpdateFactory.newLatLng(new LatLng(nouvelleLocalisation.getLatitude(), nouvelleLocalisation.getLongitude()));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(niveauZoom);
         googleMapCourante.moveCamera(pointACentrer);
