@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,16 +37,16 @@ public class VuePrincipaleClient extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_principale_client);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_client);
+        Toolbar toolbar = findViewById(R.id.toolbar_client);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView menuHamburgerNom = navigationView.getHeaderView(0).findViewById(R.id.menu_hamburger_client_nom);
@@ -66,21 +67,25 @@ public class VuePrincipaleClient extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        android.support.v4.app.Fragment monFragmentMap = getSupportFragmentManager().findFragmentByTag("MAP");
-        android.support.v4.app.Fragment monFragmentDetail = getSupportFragmentManager().findFragmentByTag("DETAIL");
-        android.support.v4.app.Fragment monFragmentPoint = getSupportFragmentManager().findFragmentByTag("POINT");
+        Fragment fragmentMap = getSupportFragmentManager().findFragmentByTag(TypeFragment.GoogleMap+"");
+        Fragment fragmentDetail = getSupportFragmentManager().findFragmentByTag(TypeFragment.DetailsRestaurant+"");
+        Fragment fragmentPoint = getSupportFragmentManager().findFragmentByTag(TypeFragment.ModifierPointsClient+"");
+        Fragment fragmentModificationClient = getSupportFragmentManager().findFragmentByTag(TypeFragment.ModificationClient+"");
+        Fragment fragmentReservationsClient = getSupportFragmentManager().findFragmentByTag(TypeFragment.ReservationsClient+"");
+        Fragment fragmentCodeFidelite = getSupportFragmentManager().findFragmentByTag(TypeFragment.CodeFidelite+"");
+
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
-            if (monFragmentMap != null && monFragmentMap.isVisible()){ //Retour quand on se trouve sur la GoogleMap
+            if (fragmentMap != null && fragmentMap.isVisible()){ //Retour quand on se trouve sur la GoogleMap
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Se déconnecter");
-                builder.setMessage("Sûr de vous ?");
+                builder.setTitle("Fermer l'application ?");
+                builder.setMessage("Voulez vous fermer l'application ?");
 
                 builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        finish(); // Déconnexion, arrive pas à quitter l'appli
+                        finish();
                     }
                 });
 
@@ -92,17 +97,27 @@ public class VuePrincipaleClient extends AppCompatActivity
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            } else { // Retour quand on est sur un autre fragment que GoogleMap
-                if (monFragmentPoint != null && monFragmentPoint.isVisible()){ // Si on se trouve sur la fragment pour modifier les points d'un client un restaurant
-                    changerDeFragment(TypeFragment.GoogleMap);
-                } else {super.onBackPressed();}
             }
         }
 
-        if (monFragmentDetail != null && monFragmentDetail.isVisible()){ // Si on se trouve sur la fragment pour réserver un restaurant
+        if (fragmentPoint != null && fragmentPoint.isVisible()){ // Si on se trouve sur la fragment pour modifier les points d'un client un restaurant
             changerDeFragment(TypeFragment.GoogleMap);
         }
 
+        if (fragmentDetail != null && fragmentDetail.isVisible()){ // Si on se trouve sur la fragment pour réserver un restaurant
+            changerDeFragment(TypeFragment.GoogleMap);
+        }
+
+        //Actualiser le menu hamburger
+        if(fragmentMap != null && fragmentMap.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_google_map);
+        }else if(fragmentModificationClient != null && fragmentModificationClient.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_modification_profil_client);
+        }else if(fragmentReservationsClient != null && fragmentReservationsClient.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_reservations_client);
+        }else if(fragmentCodeFidelite != null && fragmentCodeFidelite.isVisible()){
+            navigationView.setCheckedItem(R.id.nav_afficher_code_fidelite);
+        }
     }
 
     @Override
@@ -167,25 +182,25 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap(), "MAP").addToBackStack("fragment_google_map")
+                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap(), TypeFragment.GoogleMap+"").addToBackStack("fragment_google_map")
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient()).addToBackStack("fragment_modification_client")
+                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient(), TypeFragment.ModificationClient+"").addToBackStack("fragment_modification_client")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient()).addToBackStack("fragment_reservations_client")
+                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient(), TypeFragment.ReservationsClient+"").addToBackStack("fragment_reservations_client")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
             case CodeFidelite:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentCodeFidelite()).addToBackStack("fragment_code_fidelite")
+                        .replace(R.id.conteneur_principal_client, new FragmentCodeFidelite(), TypeFragment.CodeFidelite+"").addToBackStack("fragment_code_fidelite")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
