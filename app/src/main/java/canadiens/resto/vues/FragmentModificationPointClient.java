@@ -1,5 +1,6 @@
 package canadiens.resto.vues;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,8 @@ public class FragmentModificationPointClient extends Fragment {
     @Override
     public void onViewCreated(final View vue, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(vue, savedInstanceState);
+
+        final VuePrincipaleRestaurant vuePrincipaleRestaurant = (VuePrincipaleRestaurant)getActivity();
 
         final int points = getArguments().getInt("points");
         final String code = getArguments().getString("code");
@@ -97,6 +100,7 @@ public class FragmentModificationPointClient extends Fragment {
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.conteneur_principal_restaurant, new FragmentReservationsRestaurant())
                                 .commit();
+                        vuePrincipaleRestaurant.getNavigationView().setCheckedItem(R.id.nav_reservations_restaurant);
                     }
                 });
 

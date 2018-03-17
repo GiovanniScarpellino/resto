@@ -97,11 +97,11 @@ public class VuePrincipaleClient extends AppCompatActivity
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            } else { // Retour quand on est sur un autre fragment que GoogleMap
-                if (fragmentPoint != null && fragmentPoint.isVisible()){ // Si on se trouve sur la fragment pour modifier les points d'un client un restaurant
-                    changerDeFragment(TypeFragment.GoogleMap);
-                } else {super.onBackPressed();}
             }
+        }
+
+        if (fragmentPoint != null && fragmentPoint.isVisible()){ // Si on se trouve sur la fragment pour modifier les points d'un client un restaurant
+            changerDeFragment(TypeFragment.GoogleMap);
         }
 
         if (fragmentDetail != null && fragmentDetail.isVisible()){ // Si on se trouve sur la fragment pour réserver un restaurant
