@@ -235,6 +235,7 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                 serviceLocalisationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location localisation) {
+                        verifierLocalisationActivee();
                         if(localisation != null) {
                             verifierLocalisationActivee();
                             changerLocalisationCamera(localisation, 17);
@@ -299,12 +300,11 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
 
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    verifierLocalisationActivee();
+                    Toast.makeText(getContext(), "L'application n'affichera pas les restaurants...", Toast.LENGTH_LONG).show();
                 }
             });
             dialog.show();
         }
-        Log.d(TAG, "verifierLocalisationActivee: Localisation : " + gpsActive);
     }
 
 
