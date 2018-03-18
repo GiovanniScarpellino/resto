@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -90,6 +93,7 @@
 
     <EditText
         android:background="@drawable/style_champs_texte"
+        android:gravity="top|left"
         android:id="@+id/champ_description"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
@@ -98,6 +102,7 @@
         android:layout_marginTop="8dp"
         android:hint="Description de votre restaurant"
         android:inputType="textMultiLine"
+        android:minLines="6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/champ_mail"
@@ -139,3 +144,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
