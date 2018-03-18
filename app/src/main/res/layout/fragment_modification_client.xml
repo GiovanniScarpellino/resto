@@ -70,16 +70,16 @@
         app:layout_constraintTop_toBottomOf="@+id/champ_nom_client_modif" />
 
     <EditText
-        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_tel_client_modif"
         android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Telephone"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         android:padding="@dimen/champs_texte_padding"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/couleurBoutonActive"
@@ -88,16 +88,16 @@
         app:layout_constraintTop_toBottomOf="@+id/champ_prenom_client_modif" />
 
     <EditText
-        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mail_client_modif"
         android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Mail"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:padding="@dimen/champs_texte_padding"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/couleurBoutonActive"
@@ -106,16 +106,16 @@
         app:layout_constraintTop_toBottomOf="@+id/champ_mdp_client_modif" />
 
     <EditText
-        android:background="@drawable/style_champs_texte"
         android:id="@+id/champ_mdp_client_modif"
         android:layout_width="@dimen/champs_text_largeur"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/style_champs_texte"
         android:ems="10"
         android:hint="Mot de passe"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:padding="@dimen/champs_texte_padding"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/couleurBoutonActive"
