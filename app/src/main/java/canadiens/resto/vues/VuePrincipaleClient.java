@@ -97,6 +97,8 @@ public class VuePrincipaleClient extends AppCompatActivity
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
+            }else{
+                super.onBackPressed();
             }
         }
 
@@ -182,25 +184,25 @@ public class VuePrincipaleClient extends AppCompatActivity
         switch (fragment) {
             case GoogleMap:
                 getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap(), TypeFragment.GoogleMap+"").addToBackStack("fragment_google_map")
+                    .replace(R.id.conteneur_principal_client, new FragmentGoogleMap(), TypeFragment.GoogleMap+"").addToBackStack("my_fragment")
                     .commit();
                 navigationView.setCheckedItem(R.id.nav_google_map);
                 break;
             case ModificationClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient(), TypeFragment.ModificationClient+"").addToBackStack("fragment_modification_client")
+                        .replace(R.id.conteneur_principal_client, new FragmentModificationClient(), TypeFragment.ModificationClient+"").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_modification_profil_client);
                 break;
             case ReservationsClient:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient(), TypeFragment.ReservationsClient+"").addToBackStack("fragment_reservations_client")
+                        .replace(R.id.conteneur_principal_client, new FragmentReservationsClient(), TypeFragment.ReservationsClient+"").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
             case CodeFidelite:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.conteneur_principal_client, new FragmentCodeFidelite(), TypeFragment.CodeFidelite+"").addToBackStack("fragment_code_fidelite")
+                        .replace(R.id.conteneur_principal_client, new FragmentCodeFidelite(), TypeFragment.CodeFidelite+"").addToBackStack("my_fragment")
                         .commit();
                 navigationView.setCheckedItem(R.id.nav_reservations_client);
                 break;
