@@ -227,6 +227,7 @@ public class VuePrincipaleClient extends AppCompatActivity
                 dialogueChargement.dismiss();
                 Token.definirToken(getApplicationContext(), "erreur");
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleClient.this, VueConnexion.class);
+                intentionNaviguerVueConnexion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentionNaviguerVueConnexion);
             }
         });
