@@ -275,33 +275,33 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      * Vérifie si la localisation est activée, si non, elle demande à l'utilisateur si il veut l'activer et le re-dirige vers les paramètres de localisation
      */
     public void verifierLocalisationActivee() {
-        LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gpsActive = false;
 
         try {
+            LocationManager gestionLocation = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
             gpsActive = gestionLocation.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            if(!gpsActive) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                dialog.setMessage(R.string.indication_fenetre_location);
+                dialog.setPositiveButton(R.string.bouton_oui, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        getActivity().startActivity(myIntent);
+                    }
+                });
+                dialog.setNegativeButton(R.string.bouton_non, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Toast.makeText(getContext(), "L'application n'affichera pas les restaurants...", Toast.LENGTH_LONG).show();
+                    }
+                });
+                dialog.show();
+            }
         } catch(Exception exception1) {
             Log.e(TAG, exception1.getMessage());
-        }
-
-        if(!gpsActive) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage(R.string.indication_fenetre_location);
-            dialog.setPositiveButton(R.string.bouton_oui, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    getActivity().startActivity(myIntent);
-                }
-            });
-            dialog.setNegativeButton(R.string.bouton_non, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    Toast.makeText(getContext(), "L'application n'affichera pas les restaurants...", Toast.LENGTH_LONG).show();
-                }
-            });
-            dialog.show();
         }
     }
 

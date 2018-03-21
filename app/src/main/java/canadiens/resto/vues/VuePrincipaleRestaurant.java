@@ -181,6 +181,7 @@ public class VuePrincipaleRestaurant extends AppCompatActivity
                 dialogueChargement.dismiss();
                 Token.definirToken(getApplicationContext(), "erreur");
                 Intent intentionNaviguerVueConnexion = new Intent(VuePrincipaleRestaurant.this, VueConnexion.class);
+                intentionNaviguerVueConnexion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intentionNaviguerVueConnexion);
             }
         });
