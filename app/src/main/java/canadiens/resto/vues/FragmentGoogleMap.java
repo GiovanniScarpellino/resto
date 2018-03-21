@@ -237,7 +237,6 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
                     public void onSuccess(Location localisation) {
                         verifierLocalisationActivee();
                         if(localisation != null) {
-                            verifierLocalisationActivee();
                             changerLocalisationCamera(localisation, 17);
                         }
                     }
@@ -262,7 +261,6 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
         miseAJourLocalisation = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult resultatLocalisation) {
-                verifierLocalisationActivee();
                 for (Location localisation : resultatLocalisation.getLocations()) {
                     recupererRestaurantProche(localisation.getLatitude(), localisation.getLongitude());
                 }
@@ -313,7 +311,6 @@ public class FragmentGoogleMap extends Fragment implements ActivityCompat.OnRequ
      * @param nouvelleLocalisation
      */
     private void changerLocalisationCamera(Location nouvelleLocalisation, int niveauZoom) {
-        verifierLocalisationActivee();
         CameraUpdate pointACentrer = CameraUpdateFactory.newLatLng(new LatLng(nouvelleLocalisation.getLatitude(), nouvelleLocalisation.getLongitude()));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(niveauZoom);
         googleMapCourante.moveCamera(pointACentrer);
